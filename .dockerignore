@@ -1,0 +1,16 @@
+# Frontend build artifacts and deps
+frontend/node_modules
+frontend/dist
+frontend/.env*
+
+# Backend runtime / local state
+backend/tmp
+backend/log
+backend/storage
+backend/.env*
+backend/node_modules
+
+# Git / editor
+.git
+.gitignore
+.DS_Store

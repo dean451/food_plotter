@@ -1,0 +1,6 @@
+.env
+.env.*
+*.local.sh
+.DS_Store
+.overmind.sock
+.claude/settings.local.json

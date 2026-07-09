@@ -1,0 +1,30 @@
+# Replace "food-plotter" with your actual app name after running `fly launch`
+app = "food-plotter"
+primary_region = "dfw"
+
+[build]
+
+[env]
+  RAILS_LOG_LEVEL = "info"
+
+# SQLite lives here — this volume persists across deploys
+[[mounts]]
+  source = "food_plotter_storage"
+  destination = "/rails/storage"
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
