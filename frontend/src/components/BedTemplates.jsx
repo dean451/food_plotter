@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SPRITES } from '../sprites.jsx'
-import { parseBed, plantFitsZone, findOpenSpot, nextBedName, yardMaterials, installEstimate, formatCost } from '../utils.js'
+import { parseBed, plantFitsZone, findOpenSpot, nextBedName, yardMaterials, installEstimate, formatCost, rectsOverlap, OBSTACLE_KINDS } from '../utils.js'
 import { pillBtnStyle } from '../ui.js'
 import { BED_TEMPLATES, GARDEN_SETS, GARDEN_PLANS } from '../templates.js'
 
@@ -16,9 +16,11 @@ const TEMPLATE_CATS = [
 const PATH_FT = 2
 
 // Lay a plan's grid out on the yard: each column is as wide as its widest bed,
-// each row as tall as its tallest, with PATH_FT walking paths between cells and
-// the whole block centered in the yard. Positions snap to half-foot increments.
-function layoutPlan(plan, yardWidth, yardHeight) {
+// each row as tall as its tallest, with PATH_FT walking paths between cells.
+// The block prefers the yard's center but shifts to the nearest offset where
+// no bed lands on an obstacle; `blocked` means the plan fits the yard's size
+// but there's no placement clear of what's marked on it.
+export function layoutPlan(plan, yardWidth, yardHeight, obstacles = []) {
   const grid = plan.rows.map((row) =>
     row.map((label) => BED_TEMPLATES.find((t) => t.label === label)).filter(Boolean)
   )
@@ -30,15 +32,14 @@ function layoutPlan(plan, yardWidth, yardHeight) {
   const totalW = colWidths.reduce((a, b) => a + b, 0) + PATH_FT * (nCols - 1)
   const totalH = rowHeights.reduce((a, b) => a + b, 0) + PATH_FT * (grid.length - 1)
   const snapHalf = (v) => Math.round(v * 2) / 2
-  const offsetX = snapHalf(Math.max(0, (yardWidth - totalW) / 2))
-  const offsetY = snapHalf(Math.max(0, (yardHeight - totalH) / 2))
 
-  const beds = []
-  let y = offsetY
+  // Bed positions relative to the block's top-left corner
+  const rel = []
+  let y = 0
   grid.forEach((row, r) => {
-    let x = offsetX
+    let x = 0
     row.forEach((t, c) => {
-      beds.push({
+      rel.push({
         template: t,
         x: snapHalf(x + (colWidths[c] - t.width) / 2),
         y: snapHalf(y + (rowHeights[r] - t.height) / 2),
@@ -48,7 +49,38 @@ function layoutPlan(plan, yardWidth, yardHeight) {
     y += rowHeights[r] + PATH_FT
   })
 
-  return { beds, totalW, totalH, fits: totalW <= yardWidth && totalH <= yardHeight }
+  const sizeFits = totalW <= yardWidth && totalH <= yardHeight
+  const centered = {
+    x: snapHalf(Math.max(0, (yardWidth - totalW) / 2)),
+    y: snapHalf(Math.max(0, (yardHeight - totalH) / 2)),
+  }
+  const clearOf = (ox, oy) => rel.every((b) =>
+    !obstacles.some((o) => rectsOverlap(
+      { x: ox + b.x, y: oy + b.y, width: b.template.width, height: b.template.height }, o
+    ))
+  )
+
+  let offset = centered
+  let blocked = false
+  if (sizeFits && obstacles.length > 0 && !clearOf(centered.x, centered.y)) {
+    offset = null
+    let best = Infinity
+    for (let oy = 0; oy + totalH <= yardHeight; oy++) {
+      for (let ox = 0; ox + totalW <= yardWidth; ox++) {
+        if (!clearOf(ox, oy)) continue
+        const d = (ox - centered.x) ** 2 + (oy - centered.y) ** 2
+        if (d < best) { best = d; offset = { x: ox, y: oy } }
+      }
+    }
+    if (!offset) { blocked = true; offset = centered }
+  }
+
+  const beds = rel.map((b) => ({
+    template: b.template,
+    x: snapHalf(offset.x + b.x),
+    y: snapHalf(offset.y + b.y),
+  }))
+  return { beds, totalW, totalH, fits: sizeFits && !blocked, blocked }
 }
 
 const templateBtn = {
@@ -123,6 +155,17 @@ function PlanPreview({ plan, layout, yard }) {
     <svg width={W} height={H} style={{ display: 'block', margin: '0 auto 6px' }}>
       {/* The yard itself, to scale, so margins and centering are visible */}
       <rect x={ox} y={oy} width={yw} height={yh} rx={3} fill="#f5f0eb" stroke="#ddd" strokeWidth={1} />
+      {(yard.obstacles ?? []).map((o) => {
+        const kind = OBSTACLE_KINDS[o.kind] ?? OBSTACLE_KINDS.shed
+        return (
+          <rect
+            key={o.id}
+            x={ox + o.x * s} y={oy + o.y * s}
+            width={Math.max(1, o.width * s)} height={Math.max(1, o.height * s)}
+            rx={1.5} fill={kind.fill} stroke={kind.stroke} strokeWidth={0.75}
+          />
+        )
+      })}
       {layout.beds.map(({ template: t, x, y }, i) => (
         <rect
           key={i}
@@ -193,7 +236,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
       const extraPlantIds = (plantNames ?? [])
         .map((n) => plants?.find((p) => p.name === n)?.id)
         .filter(Boolean)
-      const { x, y } = findOpenSpot(yard.beds ?? [], yard.width, yard.height, t.width, t.height)
+      const { x, y } = findOpenSpot(yard.beds ?? [], yard.width, yard.height, t.width, t.height, yard.obstacles ?? [])
       const res = await fetch(`/api/v1/yards/${yardToken}/beds`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -216,7 +259,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
         const extraPlantIds = (plantNames ?? [])
           .map((n) => plants?.find((p) => p.name === n)?.id)
           .filter(Boolean)
-        const { x, y } = findOpenSpot(placed, yard.width, yard.height, t.width, t.height)
+        const { x, y } = findOpenSpot(placed, yard.width, yard.height, t.width, t.height, yard.obstacles ?? [])
         const name = nextBedName(t.name, placed)
         const res = await fetch(`/api/v1/yards/${yardToken}/beds`, {
           method: 'POST',
@@ -232,7 +275,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
   }
 
   async function addPlan(plan) {
-    const layout = layoutPlan(plan, yard.width, yard.height)
+    const layout = layoutPlan(plan, yard.width, yard.height, yard.obstacles ?? [])
     if (!layout.fits) return
     const existing = yard.beds?.length ?? 0
     if (existing > 0) {
@@ -295,7 +338,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
               key={key}
               onClick={() => setMode(key)}
               style={{
-                padding: '3px 12px', fontSize: 11, border: 'none', cursor: 'pointer',
+                padding: '2px 10px', fontSize: 10, border: 'none', cursor: 'pointer',
                 borderLeft: i > 0 ? '1px solid #ddd' : 'none',
                 background: mode === key ? '#2e7d32' : '#fff',
                 color: mode === key ? '#fff' : '#666',
@@ -312,7 +355,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
               <button
                 key={c.key}
                 onClick={() => setTCat(c.key)}
-                style={pillBtnStyle(tCat === c.key, { padding: '3px 9px', flexShrink: 0 })}
+                style={pillBtnStyle(tCat === c.key, { padding: '2px 8px', flexShrink: 0 })}
               >{c.label}</button>
             ))}
           </div>
@@ -369,7 +412,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
             Full layouts, centered in your yard with {PATH_FT} ft walking paths between beds
           </div>
           {plansSorted.map((plan) => {
-            const layout = layoutPlan(plan, yard.width, yard.height)
+            const layout = layoutPlan(plan, yard.width, yard.height, yard.obstacles ?? [])
             const templates = layout.beds.map((b) => b.template)
             const totalSqft = templates.reduce((s, t) => s + t.width * t.height, 0)
             const allPlants = [...new Set(templates.flatMap((t) => t.plants ?? []))]
@@ -420,7 +463,9 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
                 <ConflictWarning pairs={harmfulPairs(allPlants)} />
                 {!layout.fits && (
                   <span style={{ fontSize: 10, color: '#c62828', display: 'block', marginTop: 4 }}>
-                    Needs {layout.totalW}×{layout.totalH} ft — your yard is {yard.width}×{yard.height} ft
+                    {layout.blocked
+                      ? `Needs ${layout.totalW}×${layout.totalH} ft of open space — what's marked on your yard is in the way`
+                      : `Needs ${layout.totalW}×${layout.totalH} ft — your yard is ${yard.width}×${yard.height} ft`}
                   </span>
                 )}
               </button>

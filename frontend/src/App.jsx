@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { parseBed, clampBedToYard, plantsPerBedShared, plantingWindow, nextBedName, lumberCost, soilCost, plantsCost, yardMaterials, installEstimate } from './utils.js'
+import { parseBed, parseObstacle, clampBedToYard, plantsPerBedShared, plantingWindow, nextBedName, lumberCost, soilCost, plantsCost, yardMaterials, installEstimate, findOpenSpot, OBSTACLE_KINDS } from './utils.js'
 import YardCanvas from './components/YardCanvas.jsx'
 import BedSidebar from './components/BedSidebar.jsx'
 import PlantPanel from './components/PlantPanel.jsx'
@@ -9,6 +9,8 @@ import YardStats from './components/YardStats.jsx'
 import ZonePicker from './components/ZonePicker.jsx'
 import Toasts from './components/Toasts.jsx'
 import QuoteSheet from './components/QuoteSheet.jsx'
+import ObstacleBar from './components/ObstacleBar.jsx'
+import YardMiniMap from './components/YardMiniMap.jsx'
 
 function parseYard(y) {
   return {
@@ -16,6 +18,7 @@ function parseYard(y) {
     width: parseFloat(y.width),
     height: parseFloat(y.height),
     beds: (y.beds || []).map(parseBed),
+    obstacles: (y.obstacles || []).map(parseObstacle),
   }
 }
 
@@ -24,6 +27,7 @@ export default function App() {
   const [plants, setPlants] = useState([])
   const [me, setMe] = useState(null)
   const [selectedBedId, setSelectedBedId] = useState(null)
+  const [selectedObstacleId, setSelectedObstacleId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [authStep, setAuthStep] = useState('idle')
   const [authEmail, setAuthEmail] = useState('')
@@ -35,6 +39,18 @@ export default function App() {
   const [showQuote, setShowQuote] = useState(false)
   const [toasts, setToasts] = useState([])
   const toastSeq = useRef(0)
+  // When the main canvas scrolls out of view, the right column swaps the bed
+  // sidebar for a read-only mini yard that follows you down the template list
+  const canvasWrapRef = useRef(null)
+  const [canvasAway, setCanvasAway] = useState(false)
+
+  useEffect(() => {
+    const el = canvasWrapRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(([entry]) => setCanvasAway(!entry.isIntersecting))
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [yard?.token])
 
   function dismissToast(id) {
     setToasts((ts) => ts.filter((t) => t.id !== id))
@@ -140,8 +156,13 @@ export default function App() {
 
   useEffect(() => {
     function onKeyDown(e) {
-      if (!selectedBedId || !yard) return
+      if (!yard) return
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
+      if (selectedObstacleId && (e.key === 'Delete' || e.key === 'Backspace')) {
+        handleObstacleDelete(selectedObstacleId)
+        return
+      }
+      if (!selectedBedId) return
       const bed = yard.beds.find((b) => b.id === selectedBedId)
       if (!bed) return
       if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -159,7 +180,7 @@ export default function App() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [selectedBedId, yard])
+  }, [selectedBedId, selectedObstacleId, yard])
 
   function updateYardBeds(updater) {
     setYard((prev) => ({ ...prev, beds: updater(prev.beds) }))
@@ -257,6 +278,57 @@ export default function App() {
       duration: 10000,
       onAction: async () => { for (const bed of removed) await restoreBed(bed) },
     })
+  }
+
+  // Obstacles live as one JSON array on the yard — every change optimistically
+  // updates state and PATCHes the whole array. `updater` receives the latest
+  // obstacles so undo actions can't clobber edits made after the delete.
+  function updateObstacles(updater) {
+    setYard((prev) => {
+      const obstacles = updater(prev.obstacles ?? []).map((o) => ({
+        ...o,
+        x: parseFloat(o.x.toFixed(2)), y: parseFloat(o.y.toFixed(2)),
+        width: parseFloat(o.width.toFixed(2)), height: parseFloat(o.height.toFixed(2)),
+      }))
+      fetch(`/api/v1/yards/${prev.token}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ yard: { obstacles } }),
+      })
+        .then((res) => { if (!res.ok) throw new Error(`PATCH obstacles: ${res.status}`) })
+        .catch(async (err) => {
+          console.error(err)
+          showToast("Couldn't save that change — reverted to the last saved layout", { tone: 'error' })
+          const r = await fetch(`/api/v1/yards/${prev.token}`)
+          if (r.ok) setYard(parseYard(await r.json()))
+        })
+      return { ...prev, obstacles }
+    })
+  }
+
+  function handleObstacleAdd(kindKey) {
+    const kind = OBSTACLE_KINDS[kindKey]
+    const w = Math.min(kind.w, yard.width)
+    const h = Math.min(kind.h, yard.height)
+    const { x, y } = findOpenSpot(yard.beds, yard.width, yard.height, w, h, yard.obstacles ?? [])
+    updateObstacles((obs) => [...obs, { id: crypto.randomUUID(), kind: kindKey, x, y, width: w, height: h }])
+  }
+
+  function handleObstacleMove(obstacle) {
+    updateObstacles((obs) => obs.map((o) => o.id === obstacle.id ? obstacle : o))
+  }
+
+  function handleObstacleResize(obstacle) {
+    updateObstacles((obs) => obs.map((o) => o.id === obstacle.id ? obstacle : o))
+  }
+
+  function handleObstacleDelete(obstacleId) {
+    const obstacle = (yard.obstacles ?? []).find((o) => o.id === obstacleId)
+    if (!obstacle) return
+    if (selectedObstacleId === obstacleId) setSelectedObstacleId(null)
+    updateObstacles((obs) => obs.filter((o) => o.id !== obstacleId))
+    const label = (OBSTACLE_KINDS[obstacle.kind] ?? OBSTACLE_KINDS.shed).label.toLowerCase()
+    showToast(`Removed the ${label}`, { actionLabel: 'Undo', onAction: () => updateObstacles((obs) => [...obs, obstacle]) })
   }
 
   function handleAddPlantToBed(bed, plant) {
@@ -419,7 +491,24 @@ export default function App() {
         }
         return b
       })
-      setYard({ ...updated, beds })
+      // Obstacles too: shrink any bigger than the new yard, then pull inside
+      let obstaclesMoved = false
+      const obstacles = (updated.obstacles ?? []).map((o) => {
+        const width = Math.min(o.width, updated.width)
+        const height = Math.min(o.height, updated.height)
+        const x = Math.max(0, Math.min(updated.width - width, o.x))
+        const y = Math.max(0, Math.min(updated.height - height, o.y))
+        if (x !== o.x || y !== o.y || width !== o.width || height !== o.height) obstaclesMoved = true
+        return { ...o, x, y, width, height }
+      })
+      setYard({ ...updated, beds, obstacles })
+      if (obstaclesMoved) {
+        fetch(`/api/v1/yards/${updated.token}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ yard: { obstacles } }),
+        }).catch(console.error)
+      }
       if (oversized.length) {
         showToast(`${oversized.join(', ')} ${oversized.length === 1 ? 'is' : 'are'} bigger than the new yard — resize or remove`, { tone: 'error', duration: 8000 })
       }
@@ -669,29 +758,42 @@ export default function App() {
               />
             </div>
             <div style={{ minWidth: 0 }}>
+              <div ref={canvasWrapRef}>
               <YardCanvas
-                yard={yard} beds={yard.beds}
-                selectedBedId={selectedBedId} onSelectBed={setSelectedBedId}
+                yard={yard} beds={yard.beds} obstacles={yard.obstacles}
+                selectedBedId={selectedBedId}
+                onSelectBed={(id) => { setSelectedBedId(id); setSelectedObstacleId(null) }}
+                selectedObstacleId={selectedObstacleId}
+                onSelectObstacle={(id) => { setSelectedObstacleId(id); setSelectedBedId(null) }}
                 onBedMove={handleBedMove}
                 onBedDelete={handleBedDelete}
                 onBedDuplicate={handleBedDuplicate}
                 onBedRotate={handleBedRotate}
                 onBedResize={handleBedResize}
+                onObstacleMove={handleObstacleMove}
+                onObstacleResize={handleObstacleResize}
+                onObstacleDelete={handleObstacleDelete}
                 selectedPlantCompanions={selectedPlantCompanions}
                 selectedBed={selectedBed}
               />
+              </div>
               <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <ObstacleBar onAdd={handleObstacleAdd} />
                 <AddBedForm yard={yard} onAdd={handleBedAdd} />
                 <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
               </div>
             </div>
             <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
-              <BedSidebar
-                bed={selectedBed}
-                zone={yard.hardiness_zone}
-                onRemovePlant={handleRemovePlantFromBed}
-                maxHeight="calc(100vh - 56px)"
-              />
+              {canvasAway ? (
+                <YardMiniMap yard={yard} width={250} />
+              ) : (
+                <BedSidebar
+                  bed={selectedBed}
+                  zone={yard.hardiness_zone}
+                  onRemovePlant={handleRemovePlantFromBed}
+                  maxHeight="calc(100vh - 56px)"
+                />
+              )}
             </div>
           </div>
         </div>

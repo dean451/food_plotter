@@ -1,4 +1,4 @@
-import { lumberCost, plantsCost, soilVolume, yardMaterials, installEstimate, PRICING, sqft, formatCost } from '../utils.js'
+import { lumberCost, plantsCost, soilVolume, yardMaterials, installEstimate, PRICING, sqft, formatCost, OBSTACLE_KINDS } from '../utils.js'
 
 const th = { textAlign: 'left', padding: '6px 8px', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888', borderBottom: '2px solid #ddd' }
 const td = { padding: '6px 8px', fontSize: 12, borderBottom: '1px solid #eee', verticalAlign: 'top' }
@@ -108,6 +108,15 @@ export default function QuoteSheet({ yard, onClose }) {
         </div>
 
         <div style={{ marginTop: 22, paddingTop: 10, borderTop: '1px solid #eee', fontSize: 10, color: '#aaa', lineHeight: 1.5 }}>
+          {(yard.obstacles ?? []).length > 0 && (() => {
+            const counts = {}
+            for (const o of yard.obstacles) {
+              const label = (OBSTACLE_KINDS[o.kind] ?? OBSTACLE_KINDS.shed).label.toLowerCase()
+              counts[label] = (counts[label] ?? 0) + 1
+            }
+            const summary = Object.entries(counts).map(([label, n]) => n > 1 ? `${label} ×${n}` : label).join(', ')
+            return <>Site features marked on the plan: {summary}.{' '}</>
+          })()}
           Estimate based on typical retail pricing ({formatCost(PRICING.lumberPerLf.cedar)}/lf cedar 2×6, ${PRICING.soilPerCuYdBulk}/cu yd bulk soil).
           Final installation quote confirmed after a site visit. Prices exclude tax, irrigation, and ground prep beyond normal leveling.
         </div>

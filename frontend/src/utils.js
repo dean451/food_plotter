@@ -198,11 +198,54 @@ export function clampBedToYard(bed, yardWidth, yardHeight) {
   return { x: bed.x + (fx - fp.x), y: bed.y + (fy - fp.y) }
 }
 
+// ─── Obstacles (house, driveway, …) ──────────────────────────────────────────
+// Non-plantable rectangles on the yard. Beds can't sit on them and they don't
+// count toward plantable area.
+
+export const OBSTACLE_KINDS = {
+  house:    { label: 'House',    emoji: '🏠', fill: '#cfd8dc', stroke: '#90a4ae', w: 12, h: 10 },
+  driveway: { label: 'Driveway', emoji: '🚗', fill: '#e0e0e0', stroke: '#9e9e9e', w: 10, h: 18 },
+  patio:    { label: 'Patio',    emoji: '🪑', fill: '#d7ccc8', stroke: '#a1887f', w: 8,  h: 8 },
+  shed:     { label: 'Shed',     emoji: '🛖', fill: '#c5b8a5', stroke: '#8d6e63', w: 6,  h: 4 },
+  tree:     { label: 'Tree',     emoji: '🌳', fill: '#dcedc8', stroke: '#7cb342', w: 6,  h: 6 },
+  pool:     { label: 'Pool',     emoji: '🌊', fill: '#b3e5fc', stroke: '#4fc3f7', w: 10, h: 6 },
+}
+
+export function rectsOverlap(a, b) {
+  return a.x < b.x + b.width && b.x < a.x + a.width &&
+         a.y < b.y + b.height && b.y < a.y + a.height
+}
+
+// Obstacle area that actually sits inside the yard (obstacles may hang off the
+// edge after a yard resize). Overlapping obstacles double-count — good enough
+// for an estimate, and the canvas flags beds, not obstacle-on-obstacle.
+export function obstaclesArea(obstacles, yardWidth, yardHeight) {
+  return (obstacles ?? []).reduce((sum, o) => {
+    const w = Math.max(0, Math.min(o.x + o.width, yardWidth) - Math.max(o.x, 0))
+    const h = Math.max(0, Math.min(o.y + o.height, yardHeight) - Math.max(o.y, 0))
+    return sum + w * h
+  }, 0)
+}
+
+export function plantableArea(yard) {
+  return Math.max(0, yard.width * yard.height - obstaclesArea(yard.obstacles, yard.width, yard.height))
+}
+
+export function parseObstacle(o) {
+  return {
+    ...o,
+    x: parseFloat(o.x) || 0,
+    y: parseFloat(o.y) || 0,
+    width: parseFloat(o.width) || 1,
+    height: parseFloat(o.height) || 1,
+  }
+}
+
 // First open spot for a new w×h bed, scanning left-to-right, top-to-bottom.
 // Tries to keep a 1 ft walking gap around existing beds, then settles for a
 // snug fit; (0,0) if the yard is truly full.
-export function findOpenSpot(beds, yardWidth, yardHeight, w, h) {
-  const rects = beds.map(bedFootprint)
+export function findOpenSpot(beds, yardWidth, yardHeight, w, h, obstacles = []) {
+  const rects = [...beds.map(bedFootprint), ...obstacles]
   const collides = (x, y, pad) => rects.some((r) =>
     x < r.x + r.width + pad && r.x - pad < x + w &&
     y < r.y + r.height + pad && r.y - pad < y + h

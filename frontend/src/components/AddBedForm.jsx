@@ -29,7 +29,8 @@ export default function AddBedForm({ yard, onAdd }) {
     try {
       const { x, y } = findOpenSpot(
         yard.beds ?? [], yard.width, yard.height,
-        parseFloat(form.width) || 1, parseFloat(form.height) || 1
+        parseFloat(form.width) || 1, parseFloat(form.height) || 1,
+        yard.obstacles ?? []
       )
       const res = await fetch(`/api/v1/yards/${yard.token}/beds`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -41,7 +42,14 @@ export default function AddBedForm({ yard, onAdd }) {
     } finally { setSaving(false) }
   }
 
-  if (!open) return <button onClick={() => setOpen(true)} style={btnStyle}>+ Add Bed</button>
+  if (!open) return (
+    <button
+      onClick={() => setOpen(true)}
+      style={{ ...btnStyle, alignSelf: 'flex-start', padding: '4px 14px', fontSize: 12, borderRadius: 14 }}
+    >
+      + Add Bed
+    </button>
+  )
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>

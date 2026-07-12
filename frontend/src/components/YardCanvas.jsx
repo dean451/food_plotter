@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { spriteFor } from '../sprites.jsx'
-import { sqft, bedFootprint, clampBedToYard } from '../utils.js'
+import { sqft, bedFootprint, clampBedToYard, rectsOverlap, OBSTACLE_KINDS } from '../utils.js'
 
 const PX_PER_FT = 20
 const SNAP_FT = 1
 const COMPANION_DISTANCE_FT = 15
 
-const MATERIAL_COLORS = {
+export const MATERIAL_COLORS = {
   cedar:   '#c8a96e',
   pine:    '#ddc99a',
   cypress: '#9a7248',
@@ -86,28 +86,35 @@ function CompanionTooltip({ bed, selectedBed, rel, mouseX, mouseY }) {
   )
 }
 
-export default function YardCanvas({ yard, beds, selectedBedId, onSelectBed, onBedMove, onBedDelete, onBedDuplicate, onBedRotate, onBedResize, selectedPlantCompanions, selectedBed }) {
+export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedDuplicate, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed }) {
   const [hovered, setHovered] = useState(null)
+  const [hoveredObstacle, setHoveredObstacle] = useState(null)
   const [localBeds, setLocalBeds] = useState(beds)
+  const [localObstacles, setLocalObstacles] = useState(obstacles ?? [])
   const [companionTooltip, setCompanionTooltip] = useState(null)
   const dragging = useRef(null)
   const resizing = useRef(null)
 
   useEffect(() => { setLocalBeds(beds) }, [beds])
+  useEffect(() => { setLocalObstacles(obstacles ?? []) }, [obstacles])
 
   const W = yard.width * PX_PER_FT
   const H = yard.height * PX_PER_FT
 
-  // Beds whose footprints intersect another bed's (shared edges don't count)
+  // Beds whose footprints intersect another bed's or an obstacle's (shared
+  // edges don't count)
   const overlappingIds = new Set()
   for (let i = 0; i < localBeds.length; i++) {
     for (let j = i + 1; j < localBeds.length; j++) {
       const a = bedFootprint(localBeds[i])
       const b = bedFootprint(localBeds[j])
-      if (a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height) {
+      if (rectsOverlap(a, b)) {
         overlappingIds.add(localBeds[i].id)
         overlappingIds.add(localBeds[j].id)
       }
+    }
+    if (localObstacles.some((o) => rectsOverlap(bedFootprint(localBeds[i]), o))) {
+      overlappingIds.add(localBeds[i].id)
     }
   }
 
@@ -146,6 +153,36 @@ export default function YardCanvas({ yard, beds, selectedBedId, onSelectBed, onB
     return (W + 2) / rect.width
   }
 
+  function onObstaclePointerDown(e, obstacle) {
+    e.preventDefault()
+    onSelectObstacle(obstacle.id)
+    const svg = e.currentTarget.closest('svg')
+    const svgRect = svg.getBoundingClientRect()
+    const scale = svgScale(svg)
+    dragging.current = {
+      obstacle,
+      startMouseX: (e.clientX - svgRect.left) * scale,
+      startMouseY: (e.clientY - svgRect.top) * scale,
+      startX: obstacle.x,
+      startY: obstacle.y,
+    }
+  }
+
+  function onObstacleResizePointerDown(e, obstacle) {
+    e.preventDefault()
+    e.stopPropagation()
+    const svg = e.currentTarget.closest('svg')
+    const svgRect = svg.getBoundingClientRect()
+    const scale = svgScale(svg)
+    resizing.current = {
+      obstacle,
+      startMouseX: (e.clientX - svgRect.left) * scale,
+      startMouseY: (e.clientY - svgRect.top) * scale,
+      startWidth: obstacle.width,
+      startHeight: obstacle.height,
+    }
+  }
+
   function onSvgPointerMove(e) {
     const svgRect = e.currentTarget.getBoundingClientRect()
     const scale = (W + 2) / svgRect.width
@@ -153,7 +190,21 @@ export default function YardCanvas({ yard, beds, selectedBedId, onSelectBed, onB
     const mouseY = (e.clientY - svgRect.top) * scale
     const snap = (v) => Math.round(v / SNAP_FT) * SNAP_FT
 
-    if (dragging.current) {
+    if (dragging.current?.obstacle) {
+      const { startMouseX, startMouseY, startX, startY, obstacle } = dragging.current
+      const dx = (mouseX - startMouseX) / PX_PER_FT
+      const dy = (mouseY - startMouseY) / PX_PER_FT
+      const nx = Math.max(0, Math.min(yard.width - obstacle.width, snap(startX + dx)))
+      const ny = Math.max(0, Math.min(yard.height - obstacle.height, snap(startY + dy)))
+      setLocalObstacles((prev) => prev.map((o) => o.id === obstacle.id ? { ...o, x: nx, y: ny } : o))
+    } else if (resizing.current?.obstacle) {
+      const { startMouseX, startMouseY, startWidth, startHeight, obstacle } = resizing.current
+      const dx = (mouseX - startMouseX) / PX_PER_FT
+      const dy = (mouseY - startMouseY) / PX_PER_FT
+      const nw = snap(Math.max(1, Math.min(yard.width - obstacle.x, startWidth + dx)))
+      const nh = snap(Math.max(1, Math.min(yard.height - obstacle.y, startHeight + dy)))
+      setLocalObstacles((prev) => prev.map((o) => o.id === obstacle.id ? { ...o, width: nw, height: nh } : o))
+    } else if (dragging.current) {
       const { startMouseX, startMouseY, startBedX, startBedY, bed } = dragging.current
       const dx = (mouseX - startMouseX) / PX_PER_FT
       const dy = (mouseY - startMouseY) / PX_PER_FT
@@ -183,7 +234,15 @@ export default function YardCanvas({ yard, beds, selectedBedId, onSelectBed, onB
   }
 
   function onSvgPointerUp() {
-    if (dragging.current) {
+    if (dragging.current?.obstacle) {
+      const moved = localObstacles.find((o) => o.id === dragging.current.obstacle.id)
+      dragging.current = null
+      onObstacleMove(moved)
+    } else if (resizing.current?.obstacle) {
+      const resized = localObstacles.find((o) => o.id === resizing.current.obstacle.id)
+      resizing.current = null
+      onObstacleResize(resized)
+    } else if (dragging.current) {
       const moved = localBeds.find((b) => b.id === dragging.current.bed.id)
       dragging.current = null
       onBedMove(moved)
@@ -221,6 +280,70 @@ export default function YardCanvas({ yard, beds, selectedBedId, onSelectBed, onB
             </text>
           </g>
         )}
+
+        {localObstacles.map((o) => {
+          const kind = OBSTACLE_KINDS[o.kind] ?? OBSTACLE_KINDS.shed
+          const ox = o.x * PX_PER_FT
+          const oy = o.y * PX_PER_FT
+          const ow = o.width * PX_PER_FT
+          const oh = o.height * PX_PER_FT
+          const isHovered = hoveredObstacle === o.id
+          const isSelected = selectedObstacleId === o.id
+          return (
+            <g
+              key={o.id}
+              onPointerDown={(e) => onObstaclePointerDown(e, o)}
+              onPointerEnter={() => setHoveredObstacle(o.id)}
+              onPointerLeave={() => setHoveredObstacle(null)}
+              style={{ cursor: 'grab' }}
+            >
+              <rect
+                x={ox} y={oy} width={ow} height={oh}
+                fill={kind.fill} stroke={isSelected ? '#1a73e8' : kind.stroke}
+                strokeWidth={isHovered || isSelected ? 2.5 : 1.5} rx={4}
+              />
+              <text
+                x={ox + ow / 2} y={oy + oh / 2}
+                textAnchor="middle" dominantBaseline="middle"
+                fontSize={Math.min(ow, oh) * 0.4} opacity={0.85}
+                style={{ userSelect: 'none', pointerEvents: 'none' }}
+              >
+                {kind.emoji}
+              </text>
+              {oh > 30 && (
+                <text
+                  x={ox + ow / 2} y={oy + oh / 2 + Math.min(ow, oh) * 0.28 + 8}
+                  textAnchor="middle" fontSize={Math.max(6, Math.min(9, (ow - 8) / (kind.label.length * 0.6)))}
+                  fontFamily="sans-serif" fill="#666" fontWeight="600"
+                  style={{ userSelect: 'none', pointerEvents: 'none' }}
+                >
+                  {kind.label}
+                </text>
+              )}
+              {(isHovered || isSelected) && (
+                <>
+                  {/* Delete — top right */}
+                  <g transform={`translate(${ox + ow - 10}, ${oy + 10})`} onPointerDown={(e) => { e.stopPropagation(); onObstacleDelete(o.id) }} style={{ cursor: 'pointer' }}>
+                    <circle r={9} fill="white" stroke="#e53935" strokeWidth={1.5} />
+                    <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#e53935" fontWeight="bold" style={{ userSelect: 'none' }}>×</text>
+                  </g>
+                  {/* Diagonal resize — bottom right */}
+                  <g transform={`translate(${ox + ow - 10}, ${oy + oh - 10})`} onPointerDown={(e) => onObstacleResizePointerDown(e, o)} style={{ cursor: 'nwse-resize' }}>
+                    <circle r={9} fill="white" stroke="#555" strokeWidth={1.5} />
+                    <text textAnchor="middle" dominantBaseline="middle" fontSize={11} fill="#555" style={{ userSelect: 'none' }}>⤡</text>
+                  </g>
+                  <text
+                    x={ox + ow / 2} y={oy + 12}
+                    textAnchor="middle" fontSize={8} fontFamily="sans-serif" fill="#777"
+                    style={{ pointerEvents: 'none', userSelect: 'none' }}
+                  >
+                    {sqft(o.width * o.height)} sq ft
+                  </text>
+                </>
+              )}
+            </g>
+          )
+        })}
 
         {localBeds.map((bed) => {
           const bx = bed.x * PX_PER_FT

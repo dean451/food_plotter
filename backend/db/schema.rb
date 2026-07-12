@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_04_235644) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_11_000001) do
   create_table "beds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "depth"
@@ -81,6 +81,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_235644) do
     t.string "hardiness_zone"
     t.decimal "height"
     t.string "name"
+    t.json "obstacles", default: [], null: false
     t.string "token", null: false
     t.string "unit", default: "ft"
     t.datetime "updated_at", null: false

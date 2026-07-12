@@ -1,4 +1,4 @@
-import { sqft, formatCost, yardMaterials, installEstimate } from '../utils.js'
+import { sqft, formatCost, yardMaterials, installEstimate, plantableArea } from '../utils.js'
 
 // Recommended bed coverage scales inversely with yard size: small plots can be
 // planted densely, but in a big yard, paths, seating, and access eat the rest —
@@ -12,30 +12,37 @@ function coverageTarget(yardArea) {
 
 export default function YardStats({ yard }) {
   const yardArea = yard.width * yard.height
+  // Coverage guidance is measured against plantable space — the yard minus
+  // anything marked as house/driveway/etc.
+  const plantable = plantableArea(yard)
+  const hasObstacles = (yard.obstacles ?? []).length > 0
   const bedArea = yard.beds.reduce((sum, b) => sum + b.width * b.height, 0)
-  const openArea = Math.max(0, yardArea - bedArea)
-  const coverage = yardArea > 0 ? Math.round((bedArea / yardArea) * 100) : 0
+  const openArea = Math.max(0, plantable - bedArea)
+  const coverage = plantable > 0 ? Math.round((bedArea / plantable) * 100) : 0
   const plantedBeds = yard.beds.filter((b) => b.extra_plants?.length > 0).length
   const diyTotal = yardMaterials(yard.beds).total
   const installedTotal = installEstimate(yard.beds).total
 
-  const [lo, hi] = coverageTarget(yardArea)
-  const toGo = Math.ceil((lo / 100) * yardArea - bedArea)
+  const [lo, hi] = coverageTarget(plantable)
+  const toGo = Math.ceil((lo / 100) * plantable - bedArea)
   const coverageStatus =
     coverage < lo ? `Room to grow — about ${toGo} more sq ft of beds reaches the target.`
     : coverage <= hi ? '✓ In the sweet spot.'
     : `Above ${hi}% — keep paths walkable.`
 
   const stats = [
-    { label: 'Yard', value: `${sqft(yardArea)} sq ft`, sub: `${yard.width}×${yard.height} ${yard.unit}` },
+    {
+      label: 'Yard', value: `${sqft(yardArea)} sq ft`,
+      sub: hasObstacles ? `${sqft(plantable)} plantable` : `${yard.width}×${yard.height} ${yard.unit}`,
+    },
     {
       label: 'Beds', value: `${sqft(bedArea)} sq ft`, sub: `${coverage}% covered`,
       meter: {
         pct: coverage, lo, hi,
-        tip: `${coverageStatus} Recommended bed coverage for a ${sqft(yardArea)} sq ft yard is ${lo}–${hi}% — paths and access need the rest.`,
+        tip: `${coverageStatus} Recommended bed coverage for ${sqft(plantable)} sq ft of plantable space is ${lo}–${hi}% — paths and access need the rest.`,
       },
     },
-    { label: 'Open', value: `${sqft(openArea)} sq ft`, sub: `${100 - coverage}% remaining` },
+    { label: 'Open', value: `${sqft(openArea)} sq ft`, sub: `${Math.max(0, 100 - coverage)}% remaining` },
     { label: 'Count', value: yard.beds.length, sub: yard.beds.length === 1 ? 'bed' : 'beds' },
     { label: 'Planted', value: plantedBeds, sub: `of ${yard.beds.length} beds` },
     ...(yard.beds.length > 0 ? [{

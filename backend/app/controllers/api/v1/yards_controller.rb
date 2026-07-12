@@ -43,6 +43,7 @@ class Api::V1::YardsController < ApplicationController
   end
 
   def yard_params
-    params.require(:yard).permit(:name, :width, :height, :unit, :hardiness_zone)
+    params.require(:yard).permit(:name, :width, :height, :unit, :hardiness_zone,
+                                 obstacles: %i[id kind x y width height])
   end
 end
