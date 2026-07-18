@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_11_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_18_000001) do
   create_table "beds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "depth"
@@ -60,6 +60,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_000001) do
     t.string "emoji"
     t.string "name"
     t.text "native_notes"
+    t.string "region"
     t.string "season"
     t.decimal "spacing_ft"
     t.string "sun"
@@ -82,6 +83,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_000001) do
     t.decimal "height"
     t.string "name"
     t.json "obstacles", default: [], null: false
+    t.string "region"
     t.string "token", null: false
     t.string "unit", default: "ft"
     t.datetime "updated_at", null: false

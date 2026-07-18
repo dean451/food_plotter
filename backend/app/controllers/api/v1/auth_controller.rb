@@ -1,7 +1,7 @@
 class Api::V1::AuthController < ApplicationController
   def request_link
     email = params[:email].to_s.strip.downcase
-    return render json: { error: 'Email required' }, status: :unprocessable_entity if email.blank?
+    return render json: { error: "Email required" }, status: :unprocessable_entity if email.blank?
 
     link = MagicLink.create_for(email:)
     MagicLinkMailer.send_link(email, link.token, yard_token: params[:yard_token]).deliver_now
@@ -34,7 +34,7 @@ class Api::V1::AuthController < ApplicationController
     if (user = current_user)
       render json: {
         email: user.email,
-        yards: user.yards.order(:created_at).map { |y| { token: y.token, name: y.name } },
+        yards: user.yards.order(:created_at).map { |y| { token: y.token, name: y.name } }
       }
     else
       render json: {}
@@ -49,7 +49,7 @@ class Api::V1::AuthController < ApplicationController
   private
 
   def app_url
-    Rails.env.development? ? 'http://localhost:5173' : (ENV.fetch('APP_URL', request.base_url))
+    Rails.env.development? ? "http://localhost:5173" : (ENV.fetch("APP_URL", request.base_url))
   end
 
   def verify_url(link_token, yard_token = nil)

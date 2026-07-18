@@ -8,7 +8,7 @@ class Api::V1::YardsController < ApplicationController
     yard = Yard.includes(beds: :plant).find_by!(token: params[:token])
     render json: serialize_yard(yard)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Garden not found' }, status: :not_found
+    render json: { error: "Garden not found" }, status: :not_found
   end
 
   def create
@@ -29,15 +29,15 @@ class Api::V1::YardsController < ApplicationController
       render json: yard.errors, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Garden not found' }, status: :not_found
+    render json: { error: "Garden not found" }, status: :not_found
   end
 
   private
 
   def serialize_yard(yard)
     yard.as_json.merge(
-      'beds' => yard.beds.map { |b|
-        b.as_json(include: :plant).merge('extra_plants' => b.extra_plant_data)
+      "beds" => yard.beds.map { |b|
+        b.as_json(include: :plant).merge("extra_plants" => b.extra_plant_data)
       }
     )
   end

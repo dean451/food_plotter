@@ -23,7 +23,7 @@ BACKEND_RB="$(echo "$STAGED" | grep '^backend/.*\.rb$' || true)"
 if [ -n "$BACKEND_RB" ]; then
   echo "→ rubocop (backend)"
   REL_FILES="$(echo "$BACKEND_RB" | sed 's|^backend/||')"
-  (cd "$ROOT/backend" && bin/rubocop $REL_FILES) || FAIL=1
+  (cd "$ROOT/backend" && bin/rubocop --force-exclusion $REL_FILES) || FAIL=1
 fi
 
 if [ "$FAIL" -ne 0 ]; then

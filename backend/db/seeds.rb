@@ -5,140 +5,140 @@
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 75, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Carrot", emoji: "🥕", spacing_ft: 0.25, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 70, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Lettuce", emoji: "🥬", spacing_ft: 0.75, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 45, category: "vegetable",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Zucchini", emoji: "🥒", spacing_ft: 3.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Kale", emoji: "🥦", spacing_ft: 1.0, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Pepper", emoji: "🫑", spacing_ft: 1.5, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Cucumber", emoji: "🫛", spacing_ft: 1.5, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Pumpkin", emoji: "🎃", spacing_ft: 4.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 100, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Beans", emoji: "🫘", spacing_ft: 0.5, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Peas", emoji: "🟢", spacing_ft: 0.25, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 60, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Spinach", emoji: "🍃", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 40, category: "vegetable",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Garlic", emoji: "🧄", spacing_ft: 0.5, season: "fall",
     zone_min: "3a", zone_max: "9b",
     days_to_harvest: 240, category: "vegetable",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: "Plant cloves in Oct–Nov in TX. Harvest when lower leaves brown. Repels aphids — great companion for roses and tomatoes.",
+    attracts: nil, native_notes: "Plant cloves in Oct–Nov in TX. Harvest when lower leaves brown. Repels aphids — great companion for roses and tomatoes."
   },
   {
     name: "Onion", emoji: "🧅", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 100, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Eggplant", emoji: "🍆", spacing_ft: 2.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Radish", emoji: "🌸", spacing_ft: 0.25, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 25, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Corn", emoji: "🌽", spacing_ft: 1.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 90, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: "Plant in blocks (not rows) for wind pollination. Classic Three Sisters: plant with beans and squash.",
+    attracts: nil, native_notes: "Plant in blocks (not rows) for wind pollination. Classic Three Sisters: plant with beans and squash."
   },
   {
     name: "Broccoli", emoji: "🥦", spacing_ft: 1.5, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: "In TX, plant in late summer for fall harvest. Prefers cool weather — bolts in heat. Cut the central head and side shoots will continue producing.",
+    attracts: "bees", native_notes: "In TX, plant in late summer for fall harvest. Prefers cool weather — bolts in heat. Cut the central head and side shoots will continue producing."
   },
   {
     name: "Cauliflower", emoji: "🌕", spacing_ft: 1.5, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 75, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: "More finicky than broccoli — needs consistent moisture and cool temps. Blanch by tying outer leaves over the head when it reaches golf-ball size.",
+    attracts: nil, native_notes: "More finicky than broccoli — needs consistent moisture and cool temps. Blanch by tying outer leaves over the head when it reaches golf-ball size."
   },
   {
     name: "Swiss Chard", emoji: "🌿", spacing_ft: 0.75, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: "One of the most heat-tolerant leafy greens — keeps producing through TX summers when lettuce and spinach have bolted. Harvest outer leaves continuously.",
+    attracts: nil, native_notes: "One of the most heat-tolerant leafy greens — keeps producing through TX summers when lettuce and spinach have bolted. Harvest outer leaves continuously."
   },
   {
     name: "Leeks", emoji: "🌱", spacing_ft: 0.5, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 120, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
 
   # ── Herbs ─────────────────────────────────────────────────────────────────────
@@ -147,70 +147,70 @@
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 30, category: "herb",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees, butterflies", native_notes: nil,
+    attracts: "bees, butterflies", native_notes: nil
   },
   {
     name: "Mint", emoji: "🌱", spacing_ft: 1.0, season: "perennial",
     zone_min: "3a", zone_max: "11b",
     days_to_harvest: nil, category: "herb",
     water_needs: "moderate", sun: "part shade", deer_resistant: true,
-    attracts: "bees, butterflies", native_notes: "Spreads aggressively — grow in containers or it will take over. Repels aphids and ants.",
+    attracts: "bees, butterflies", native_notes: "Spreads aggressively — grow in containers or it will take over. Repels aphids and ants."
   },
   {
     name: "Rosemary", emoji: "🌾", spacing_ft: 2.0, season: "perennial",
     zone_min: "8a", zone_max: "10b",
     days_to_harvest: nil, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "bees, butterflies", native_notes: nil,
+    attracts: "bees, butterflies", native_notes: nil
   },
   {
     name: "Thyme", emoji: "🌿", spacing_ft: 1.0, season: "perennial",
     zone_min: "5a", zone_max: "9b",
     days_to_harvest: nil, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "bees, butterflies", native_notes: nil,
+    attracts: "bees, butterflies", native_notes: nil
   },
   {
     name: "Oregano", emoji: "🌿", spacing_ft: 1.0, season: "perennial",
     zone_min: "4a", zone_max: "10b",
     days_to_harvest: 90, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "bees, butterflies", native_notes: nil,
+    attracts: "bees, butterflies", native_notes: nil
   },
   {
     name: "Parsley", emoji: "🌿", spacing_ft: 0.75, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 75, category: "herb",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: "swallowtail butterflies", native_notes: "Host plant for black swallowtail caterpillars — consider planting extra so you can share. Biennial; let it flower the second year to attract beneficial insects.",
+    attracts: "swallowtail butterflies", native_notes: "Host plant for black swallowtail caterpillars — consider planting extra so you can share. Biennial; let it flower the second year to attract beneficial insects."
   },
   {
     name: "Dill", emoji: "🌿", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 40, category: "herb",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees, swallowtails", native_notes: "Host plant for black swallowtail caterpillars. Mature dill becomes harmful to some neighbors — harvest young. Self-seeds readily.",
+    attracts: "bees, swallowtails", native_notes: "Host plant for black swallowtail caterpillars. Mature dill becomes harmful to some neighbors — harvest young. Self-seeds readily."
   },
   {
     name: "Chives", emoji: "🌱", spacing_ft: 0.5, season: "perennial",
     zone_min: "3a", zone_max: "9b",
     days_to_harvest: 60, category: "herb",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: "bees", native_notes: "Edible purple flowers in spring — beautiful and pollinator-friendly. Repels aphids and Japanese beetles. Divide clumps every 2-3 years.",
+    attracts: "bees", native_notes: "Edible purple flowers in spring — beautiful and pollinator-friendly. Repels aphids and Japanese beetles. Divide clumps every 2-3 years."
   },
   {
     name: "Cilantro", emoji: "🌿", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 30, category: "herb",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: "bees, butterflies", native_notes: "Bolts quickly in heat — sow successively every 2-3 weeks for continuous harvest. Once it bolts, let it seed (coriander seed) or pull.",
+    attracts: "bees, butterflies", native_notes: "Bolts quickly in heat — sow successively every 2-3 weeks for continuous harvest. Once it bolts, let it seed (coriander seed) or pull."
   },
   {
     name: "Sage", emoji: "🌿", spacing_ft: 1.5, season: "perennial",
     zone_min: "4a", zone_max: "10b",
     days_to_harvest: nil, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "bees, butterflies, hummingbirds", native_notes: "Culinary sage (Salvia officinalis). Purple flower spikes in spring attract hummingbirds. Excellent companion for brassicas and carrots. Repels cabbage moths.",
+    attracts: "bees, butterflies, hummingbirds", native_notes: "Culinary sage (Salvia officinalis). Purple flower spikes in spring attract hummingbirds. Excellent companion for brassicas and carrots. Repels cabbage moths."
   },
 
   # ── Fruit ─────────────────────────────────────────────────────────────────────
@@ -219,14 +219,14 @@
     zone_min: "3a", zone_max: "10b",
     days_to_harvest: 90, category: "fruit",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Melon", emoji: "🍈", spacing_ft: 3.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "fruit",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: "Needs lots of horizontal space. Tip: grow vertically on a trellis and support heavy fruits in slings. Harvest when the stem slips easily from the vine.",
+    attracts: "bees", native_notes: "Needs lots of horizontal space. Tip: grow vertically on a trellis and support heavy fruits in slings. Harvest when the stem slips easily from the vine."
   },
 
   # ── Flowers ───────────────────────────────────────────────────────────────────
@@ -235,28 +235,28 @@
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: false,
-    attracts: "bees, butterflies, goldfinches", native_notes: nil,
+    attracts: "bees, butterflies, goldfinches", native_notes: nil
   },
   {
     name: "Lavender", emoji: "💜", spacing_ft: 2.0, season: "perennial",
     zone_min: "5a", zone_max: "9b",
     days_to_harvest: nil, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "bees, butterflies, hummingbirds", native_notes: nil,
+    attracts: "bees, butterflies, hummingbirds", native_notes: nil
   },
   {
     name: "Nasturtium", emoji: "🌺", spacing_ft: 1.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 50, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: false,
-    attracts: "bees, butterflies, hummingbirds", native_notes: "Edible flowers and leaves with a peppery flavor. Poor soil produces more flowers; rich soil more leaves. Excellent aphid trap crop — plant near tomatoes to draw aphids away.",
+    attracts: "bees, butterflies, hummingbirds", native_notes: "Edible flowers and leaves with a peppery flavor. Poor soil produces more flowers; rich soil more leaves. Excellent aphid trap crop — plant near tomatoes to draw aphids away."
   },
   {
     name: "Marigold", emoji: "🌼", spacing_ft: 0.75, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 45, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: false,
-    attracts: "bees, butterflies", native_notes: "The garden workhorse — roots secrete thiophenes that suppress nematodes in the soil. French marigolds (Tagetes patula) are most effective. Plant liberally throughout vegetable beds.",
+    attracts: "bees, butterflies", native_notes: "The garden workhorse — roots secrete thiophenes that suppress nematodes in the soil. French marigolds (Tagetes patula) are most effective. Plant liberally throughout vegetable beds."
   },
 
   # ── Texas Natives ─────────────────────────────────────────────────────────────
@@ -267,7 +267,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "monarchs, swallowtails, hummingbirds",
-    native_notes: "Blooms spring through frost. Berries are toxic to livestock. Deadhead to keep blooming. One of the best monarch butterfly plants in TX.",
+    native_notes: "Blooms spring through frost. Berries are toxic to livestock. Deadhead to keep blooming. One of the best monarch butterfly plants in TX."
   },
   {
     name: "Esperanza", emoji: "🌼", spacing_ft: 4.0, season: "perennial",
@@ -275,7 +275,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, bees",
-    native_notes: "Golden trumpet flowers June through frost. Dies to ground in hard freeze but returns reliably from roots. Thrives in heat and drought.",
+    native_notes: "Golden trumpet flowers June through frost. Dies to ground in hard freeze but returns reliably from roots. Thrives in heat and drought."
   },
   {
     name: "Turk's Cap", emoji: "🌺", spacing_ft: 4.0, season: "perennial",
@@ -283,7 +283,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "part shade", deer_resistant: true,
     attracts: "hummingbirds, bees, butterflies",
-    native_notes: "One of the few natives that thrives in deep shade. Red twisted petals never fully open — hummingbirds love it. Edible fruit tastes like watermelon candy.",
+    native_notes: "One of the few natives that thrives in deep shade. Red twisted petals never fully open — hummingbirds love it. Edible fruit tastes like watermelon candy."
   },
   {
     name: "Texas Sage", emoji: "💜", spacing_ft: 4.0, season: "perennial",
@@ -291,7 +291,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Called a 'barometer bush' — blooms after rainfall. Silver foliage. Zero irrigation once established. Never plant in clay or over-irrigated areas.",
+    native_notes: "Called a 'barometer bush' — blooms after rainfall. Silver foliage. Zero irrigation once established. Never plant in clay or over-irrigated areas."
   },
   {
     name: "Agarita", emoji: "🌿", spacing_ft: 5.0, season: "perennial",
@@ -299,7 +299,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, birds",
-    native_notes: "Thorny holly-like shrub — excellent wildlife barrier. Yellow spring flowers give way to tart red berries prized for jelly. Extremely drought tolerant once established.",
+    native_notes: "Thorny holly-like shrub — excellent wildlife barrier. Yellow spring flowers give way to tart red berries prized for jelly. Extremely drought tolerant once established."
   },
   {
     name: "Texas Mountain Laurel", emoji: "🌸", spacing_ft: 6.0, season: "perennial",
@@ -307,7 +307,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees",
-    native_notes: "Intoxicating grape Kool-Aid fragrance in spring. Seeds are toxic. Slow growing (1 ft/yr) but very long-lived. Native to Hill Country limestone.",
+    native_notes: "Intoxicating grape Kool-Aid fragrance in spring. Seeds are toxic. Slow growing (1 ft/yr) but very long-lived. Native to Hill Country limestone."
   },
   {
     name: "Rock Rose", emoji: "🌷", spacing_ft: 3.0, season: "perennial",
@@ -315,7 +315,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Pink blooms from spring through frost. Self-seeds freely — great naturalizer on slopes and rocky soil. Cut back hard in late winter to renew.",
+    native_notes: "Pink blooms from spring through frost. Self-seeds freely — great naturalizer on slopes and rocky soil. Cut back hard in late winter to renew."
   },
   {
     name: "Flame Acanthus", emoji: "🔥", spacing_ft: 3.0, season: "perennial",
@@ -323,7 +323,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, butterflies",
-    native_notes: "Top hummingbird plant in TX — a must for migration stopovers. Dies to ground in freeze but returns vigorously in spring. Tubular orange-red flowers midsummer through fall.",
+    native_notes: "Top hummingbird plant in TX — a must for migration stopovers. Dies to ground in freeze but returns vigorously in spring. Tubular orange-red flowers midsummer through fall."
   },
   {
     name: "Blackfoot Daisy", emoji: "🌼", spacing_ft: 1.5, season: "perennial",
@@ -331,7 +331,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Honey-scented white daisies nearly year-round in TX. Extremely drought tolerant. Great edging plant. Pairs beautifully with Autumn Sage and Mexican Feathergrass.",
+    native_notes: "Honey-scented white daisies nearly year-round in TX. Extremely drought tolerant. Great edging plant. Pairs beautifully with Autumn Sage and Mexican Feathergrass."
   },
   {
     name: "Winecup", emoji: "🍷", spacing_ft: 1.5, season: "perennial",
@@ -339,7 +339,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Trailing groundcover with magenta cups. Deep taproot makes it extremely drought tolerant once established — don't transplant mature plants. Thrives in rocky limestone soil.",
+    native_notes: "Trailing groundcover with magenta cups. Deep taproot makes it extremely drought tolerant once established — don't transplant mature plants. Thrives in rocky limestone soil."
   },
   {
     name: "Autumn Sage", emoji: "🌹", spacing_ft: 2.0, season: "perennial",
@@ -347,7 +347,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, bees",
-    native_notes: "Key hummingbird fuel stop during spring and fall migration. Blooms heaviest in spring and fall. Pairs beautifully with Blackfoot Daisy and Mexican Feathergrass.",
+    native_notes: "Key hummingbird fuel stop during spring and fall migration. Blooms heaviest in spring and fall. Pairs beautifully with Blackfoot Daisy and Mexican Feathergrass."
   },
   {
     name: "Purple Coneflower", emoji: "💐", spacing_ft: 1.5, season: "summer",
@@ -355,7 +355,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: false,
     attracts: "bees, butterflies, goldfinches",
-    native_notes: "Leave seed heads standing through winter — goldfinches eat them. Native to TX prairies. Good cut flower. More water tolerant than most TX natives.",
+    native_notes: "Leave seed heads standing through winter — goldfinches eat them. Native to TX prairies. Good cut flower. More water tolerant than most TX natives."
   },
   {
     name: "Sotol", emoji: "🌵", spacing_ft: 5.0, season: "perennial",
@@ -363,7 +363,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: nil,
-    native_notes: "Dramatic architectural rosette of narrow serrated leaves. Each rosette blooms once (tall spike) then dies, but offsets form a colony. Staple of Hill Country xeriscape.",
+    native_notes: "Dramatic architectural rosette of narrow serrated leaves. Each rosette blooms once (tall spike) then dies, but offsets form a colony. Staple of Hill Country xeriscape."
   },
   {
     name: "Mexican Feathergrass", emoji: "🌾", spacing_ft: 2.0, season: "perennial",
@@ -371,7 +371,7 @@
     days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "birds",
-    native_notes: "Silky, airy texture — stunning in evening light. Self-seeds prolifically, can spread. Pairs perfectly with Blackfoot Daisy and Autumn Sage. Birds eat the seeds.",
+    native_notes: "Silky, airy texture — stunning in evening light. Self-seeds prolifically, can spread. Pairs perfectly with Blackfoot Daisy and Autumn Sage. Birds eat the seeds."
   },
   {
     name: "Chiltepín", emoji: "🌶️", spacing_ft: 2.0, season: "summer",
@@ -379,7 +379,7 @@
     days_to_harvest: 90, category: "native", region: "south_central",
     water_needs: "low", sun: "part shade", deer_resistant: true,
     attracts: "birds",
-    native_notes: "Wild ancestor of all chile peppers. Tiny fruits are intensely hot — birds eat them and spread seeds. Uniquely prefers part shade unlike most peppers. Prized by TX chefs.",
+    native_notes: "Wild ancestor of all chile peppers. Tiny fruits are intensely hot — birds eat them and spread seeds. Uniquely prefers part shade unlike most peppers. Prized by TX chefs."
   },
   # ── Northeast Natives ─────────────────────────────────────────────────────────
   # Sources: New England Wild Flower Society (Native Plant Trust), USDA PLANTS
@@ -389,7 +389,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
     attracts: "bees, butterflies",
-    native_notes: "One of the last big nectar sources before frost — a critical fuel stop for migrating monarchs. Purple daisy-like blooms cover the plant late September into October.",
+    native_notes: "One of the last big nectar sources before frost — a critical fuel stop for migrating monarchs. Purple daisy-like blooms cover the plant late September into October."
   },
   {
     name: "Wild Lupine", emoji: "💜", spacing_ft: 1.5, season: "spring",
@@ -397,7 +397,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "The only host plant the endangered Karner blue butterfly can lay eggs on — a real conservation pick, not just a pretty spike of blue-purple blooms. Wants sandy, well-drained soil.",
+    native_notes: "The only host plant the endangered Karner blue butterfly can lay eggs on — a real conservation pick, not just a pretty spike of blue-purple blooms. Wants sandy, well-drained soil."
   },
   {
     name: "Wild Bergamot", emoji: "🌸", spacing_ft: 2.0, season: "summer",
@@ -405,7 +405,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
     attracts: "bees, hummingbirds, butterflies",
-    native_notes: "A mint-family relative — lavender flower clusters smell like oregano when brushed. Give it airflow; it's prone to powdery mildew in still, humid spots.",
+    native_notes: "A mint-family relative — lavender flower clusters smell like oregano when brushed. Give it airflow; it's prone to powdery mildew in still, humid spots."
   },
   {
     name: "Little Bluestem", emoji: "🌾", spacing_ft: 1.5, season: "perennial",
@@ -413,7 +413,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "birds",
-    native_notes: "Blue-green in summer, copper-orange all winter — one of the few grasses with real cold-season presence. Fluffy seed heads feed overwintering birds.",
+    native_notes: "Blue-green in summer, copper-orange all winter — one of the few grasses with real cold-season presence. Fluffy seed heads feed overwintering birds."
   },
   {
     name: "Winterberry", emoji: "🍒", spacing_ft: 5.0, season: "perennial",
@@ -421,7 +421,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
     attracts: "birds",
-    native_notes: "A deciduous holly — drops its leaves and leaves the branches loaded with red berries all winter. Needs a male and female plant nearby to fruit; only the female berries.",
+    native_notes: "A deciduous holly — drops its leaves and leaves the branches loaded with red berries all winter. Needs a male and female plant nearby to fruit; only the female berries."
   },
   {
     name: "Wild Columbine", emoji: "🌺", spacing_ft: 1.0, season: "spring",
@@ -429,7 +429,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "moderate", sun: "part shade", deer_resistant: true,
     attracts: "hummingbirds",
-    native_notes: "Nectar spurs are built for hummingbird tongues and little else — one of the first blooms migrating hummingbirds find in spring. Self-seeds gently in woodland edges.",
+    native_notes: "Nectar spurs are built for hummingbird tongues and little else — one of the first blooms migrating hummingbirds find in spring. Self-seeds gently in woodland edges."
   },
   {
     name: "Joe-Pye Weed", emoji: "🌸", spacing_ft: 3.0, season: "summer",
@@ -437,7 +437,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "high", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Grows 5-7 ft tall with dusty-pink flower domes — a magnet for swallowtails. Wants consistently moist soil; a natural fit for a low spot that stays damp.",
+    native_notes: "Grows 5-7 ft tall with dusty-pink flower domes — a magnet for swallowtails. Wants consistently moist soil; a natural fit for a low spot that stays damp."
   },
   {
     name: "Foamflower", emoji: "🤍", spacing_ft: 1.0, season: "spring",
@@ -445,7 +445,7 @@
     days_to_harvest: nil, category: "native", region: "northeast",
     water_needs: "moderate", sun: "part shade", deer_resistant: true,
     attracts: "bees",
-    native_notes: "A spreading woodland groundcover with foamy white spring spikes. One of the better natives for shady spots where turf won't grow.",
+    native_notes: "A spreading woodland groundcover with foamy white spring spikes. One of the better natives for shady spots where turf won't grow."
   },
 
   # ── Upper Midwest & Prairie Natives ───────────────────────────────────────────
@@ -456,7 +456,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "A true tallgrass prairie legume — fixes its own nitrogen and needs none added. Thimble-shaped purple flower heads bloom bottom-to-top over several weeks.",
+    native_notes: "A true tallgrass prairie legume — fixes its own nitrogen and needs none added. Thimble-shaped purple flower heads bloom bottom-to-top over several weeks."
   },
   {
     name: "Prairie Blazing Star", emoji: "💜", spacing_ft: 1.5, season: "summer",
@@ -464,7 +464,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Tall purple spikes that open top-down, unusual among spike-flowering plants. One of the top monarch nectar stops during fall migration through the Midwest.",
+    native_notes: "Tall purple spikes that open top-down, unusual among spike-flowering plants. One of the top monarch nectar stops during fall migration through the Midwest."
   },
   {
     name: "Compass Plant", emoji: "🌻", spacing_ft: 3.0, season: "summer",
@@ -472,7 +472,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees",
-    native_notes: "An original tallgrass prairie icon — leaves orient north-south to dodge midday sun, hence the name. Deep taproot takes 2-3 years to establish before it blooms; be patient.",
+    native_notes: "An original tallgrass prairie icon — leaves orient north-south to dodge midday sun, hence the name. Deep taproot takes 2-3 years to establish before it blooms; be patient."
   },
   {
     name: "Butterfly Milkweed", emoji: "🧡", spacing_ft: 1.5, season: "summer",
@@ -480,7 +480,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "The only milkweed monarch caterpillars can eat that also stays tidy and clump-forming rather than running. Bright orange clusters, drought-tough once established.",
+    native_notes: "The only milkweed monarch caterpillars can eat that also stays tidy and clump-forming rather than running. Bright orange clusters, drought-tough once established."
   },
   {
     name: "Prairie Dropseed", emoji: "🌾", spacing_ft: 2.0, season: "perennial",
@@ -488,7 +488,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "birds",
-    native_notes: "Fine-textured fountain grass with a fragrance gardeners describe as buttered popcorn or cilantro when it flowers in late summer. Slow to establish, long-lived once it does.",
+    native_notes: "Fine-textured fountain grass with a fragrance gardeners describe as buttered popcorn or cilantro when it flowers in late summer. Slow to establish, long-lived once it does."
   },
   {
     name: "Pale Purple Coneflower", emoji: "🌸", spacing_ft: 1.5, season: "summer",
@@ -496,7 +496,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
-    native_notes: "Narrower, droopier petals than the familiar purple coneflower, and a true remnant-prairie species. Extremely drought tolerant once its taproot is established.",
+    native_notes: "Narrower, droopier petals than the familiar purple coneflower, and a true remnant-prairie species. Extremely drought tolerant once its taproot is established."
   },
   {
     name: "Rattlesnake Master", emoji: "⭐", spacing_ft: 2.0, season: "summer",
@@ -504,7 +504,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees",
-    native_notes: "Spiky yucca-like foliage topped with golf-ball flower clusters that pull in an unusual crowd of wasps and soldier beetles, not just bees. Bitter roots keep deer and rabbits off it entirely.",
+    native_notes: "Spiky yucca-like foliage topped with golf-ball flower clusters that pull in an unusual crowd of wasps and soldier beetles, not just bees. Bitter roots keep deer and rabbits off it entirely."
   },
   {
     name: "Switchgrass", emoji: "🌾", spacing_ft: 2.5, season: "perennial",
@@ -512,7 +512,7 @@
     days_to_harvest: nil, category: "native", region: "upper_midwest",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "birds",
-    native_notes: "One of the original tallgrass prairie matrix grasses — airy seed heads by late summer, gold-to-tan through winter, and dense enough that birds nest in it.",
+    native_notes: "One of the original tallgrass prairie matrix grasses — airy seed heads by late summer, gold-to-tan through winter, and dense enough that birds nest in it."
   },
 
   # ── Pacific Northwest Natives ──────────────────────────────────────────────────
@@ -523,7 +523,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "low", sun: "part shade", deer_resistant: true,
     attracts: "bees, birds",
-    native_notes: "Oregon's state flower — holly-like evergreen leaves, yellow spring blooms, and tart blue berries birds strip fast (also good for jelly if you beat them to it). Spiny leaves keep deer off.",
+    native_notes: "Oregon's state flower — holly-like evergreen leaves, yellow spring blooms, and tart blue berries birds strip fast (also good for jelly if you beat them to it). Spiny leaves keep deer off."
   },
   {
     name: "Red Flowering Currant", emoji: "🌸", spacing_ft: 4.0, season: "spring",
@@ -531,7 +531,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "low", sun: "full sun", deer_resistant: false,
     attracts: "hummingbirds, bees",
-    native_notes: "Blooms so early it's often the first flower migrating Rufous hummingbirds find each spring — the two are believed to have co-evolved timing. Berries are edible but bland; birds eat them anyway.",
+    native_notes: "Blooms so early it's often the first flower migrating Rufous hummingbirds find each spring — the two are believed to have co-evolved timing. Berries are edible but bland; birds eat them anyway."
   },
   {
     name: "Salal", emoji: "🍇", spacing_ft: 3.0, season: "perennial",
@@ -539,7 +539,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
     attracts: "birds",
-    native_notes: "The classic PNW forest-floor evergreen — leathery leaves, dark edible berries long used by coastal Indigenous peoples for food. Spreads by rhizome to form dense understory cover.",
+    native_notes: "The classic PNW forest-floor evergreen — leathery leaves, dark edible berries long used by coastal Indigenous peoples for food. Spreads by rhizome to form dense understory cover."
   },
   {
     name: "Camas", emoji: "🔵", spacing_ft: 0.5, season: "spring",
@@ -547,7 +547,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "high", sun: "full sun", deer_resistant: true,
     attracts: "bees",
-    native_notes: "Bulbs were a staple food crop for Pacific Northwest Indigenous peoples, traded widely and pit-roasted. Wants a wet spring and bone-dry summer dormancy — don't irrigate once it yellows.",
+    native_notes: "Bulbs were a staple food crop for Pacific Northwest Indigenous peoples, traded widely and pit-roasted. Wants a wet spring and bone-dry summer dormancy — don't irrigate once it yellows."
   },
   {
     name: "Douglas Aster", emoji: "💜", spacing_ft: 1.5, season: "fall",
@@ -555,7 +555,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
     attracts: "bees, butterflies",
-    native_notes: "One of the last nectar sources standing into fall on the west side of the Cascades, when almost nothing else is blooming for late-season pollinators.",
+    native_notes: "One of the last nectar sources standing into fall on the west side of the Cascades, when almost nothing else is blooming for late-season pollinators."
   },
   {
     name: "Vine Maple", emoji: "🍁", spacing_ft: 8.0, season: "perennial",
@@ -563,7 +563,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
     attracts: nil,
-    native_notes: "An understory tree that stays multi-stemmed and shrubby in shade, or upright in more sun. Brilliant orange-red fall color even in a wet, gray Northwest autumn.",
+    native_notes: "An understory tree that stays multi-stemmed and shrubby in shade, or upright in more sun. Brilliant orange-red fall color even in a wet, gray Northwest autumn."
   },
   {
     name: "Western Sword Fern", emoji: "🌿", spacing_ft: 3.0, season: "perennial",
@@ -571,7 +571,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "moderate", sun: "part shade", deer_resistant: true,
     attracts: nil,
-    native_notes: "The default fern of PNW forest floors — evergreen, tolerates deep shade and dry summer shade alike once established. Rarely browsed, easy to divide.",
+    native_notes: "The default fern of PNW forest floors — evergreen, tolerates deep shade and dry summer shade alike once established. Rarely browsed, easy to divide."
   },
   {
     name: "Nootka Rose", emoji: "🌹", spacing_ft: 5.0, season: "spring",
@@ -579,7 +579,7 @@
     days_to_harvest: nil, category: "native", region: "pacific_northwest",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
     attracts: "bees, birds",
-    native_notes: "A true wild rose — single pink blooms, then hips that hang on through winter for birds. Suckers into thickets, so give it room or a hard edge to contain it.",
+    native_notes: "A true wild rose — single pink blooms, then hips that hang on through winter for birds. Suckers into thickets, so give it room or a hard edge to contain it."
   },
 
   # ── Zone-expansion catalog (cold-climate, subtropical, flowers) ──────────────
@@ -588,232 +588,232 @@
     zone_min: "3a", zone_max: "8a",
     days_to_harvest: nil, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Asparagus", emoji: "🎍", spacing_ft: 1.5, season: "perennial",
     zone_min: "3a", zone_max: "8b",
     days_to_harvest: nil, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Horseradish", emoji: "🌱", spacing_ft: 2.0, season: "perennial",
     zone_min: "3a", zone_max: "9a",
     days_to_harvest: nil, category: "vegetable",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Potato", emoji: "🥔", spacing_ft: 1.0, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 90, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Beet", emoji: "🫜", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 60, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Turnip", emoji: "🌰", spacing_ft: 0.5, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 55, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Cabbage", emoji: "🥬", spacing_ft: 1.5, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 80, category: "vegetable",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Brussels Sprouts", emoji: "🟢", spacing_ft: 2.0, season: "fall",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 100, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Arugula", emoji: "🌿", spacing_ft: 0.5, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 40, category: "vegetable",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Bok Choy", emoji: "🥬", spacing_ft: 0.75, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 45, category: "vegetable",
     water_needs: "high", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Raspberry", emoji: "🍇", spacing_ft: 2.0, season: "perennial",
     zone_min: "3a", zone_max: "9a",
     days_to_harvest: nil, category: "fruit",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Blueberry", emoji: "🫐", spacing_ft: 4.0, season: "perennial",
     zone_min: "4a", zone_max: "7b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: "bees", native_notes: nil,
+    attracts: "bees", native_notes: nil
   },
   {
     name: "Currant", emoji: "🍒", spacing_ft: 4.0, season: "perennial",
     zone_min: "3a", zone_max: "7b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Gooseberry", emoji: "🍏", spacing_ft: 4.0, season: "perennial",
     zone_min: "3a", zone_max: "8a",
     days_to_harvest: nil, category: "fruit",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Sorrel", emoji: "🍃", spacing_ft: 1.0, season: "perennial",
     zone_min: "3a", zone_max: "7b",
     days_to_harvest: nil, category: "herb",
     water_needs: "moderate", sun: "part shade", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Lovage", emoji: "🌿", spacing_ft: 3.0, season: "perennial",
     zone_min: "4a", zone_max: "8a",
     days_to_harvest: nil, category: "herb",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Tarragon", emoji: "🌿", spacing_ft: 1.5, season: "perennial",
     zone_min: "4a", zone_max: "8b",
     days_to_harvest: nil, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Chamomile", emoji: "🌼", spacing_ft: 0.75, season: "spring",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 65, category: "herb",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "hoverflies, beneficial wasps", native_notes: nil,
+    attracts: "hoverflies, beneficial wasps", native_notes: nil
   },
   {
     name: "Bee Balm", emoji: "🐝", spacing_ft: 2.0, season: "perennial",
     zone_min: "4a", zone_max: "9a",
     days_to_harvest: nil, category: "flower",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: "hummingbirds, bees", native_notes: nil,
+    attracts: "hummingbirds, bees", native_notes: nil
   },
   {
     name: "Black-Eyed Susan", emoji: "🌼", spacing_ft: 1.5, season: "perennial",
     zone_min: "3a", zone_max: "9b",
     days_to_harvest: nil, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "butterflies", native_notes: nil,
+    attracts: "butterflies", native_notes: nil
   },
   {
     name: "Yarrow", emoji: "🌸", spacing_ft: 1.5, season: "perennial",
     zone_min: "3a", zone_max: "9a",
     days_to_harvest: nil, category: "flower",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: "beneficial insects", native_notes: nil,
+    attracts: "beneficial insects", native_notes: nil
   },
   {
     name: "Zinnia", emoji: "💮", spacing_ft: 1.0, season: "summer",
     zone_min: "2a", zone_max: "11b",
     days_to_harvest: 60, category: "flower",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "butterflies, bees", native_notes: nil,
+    attracts: "butterflies, bees", native_notes: nil
   },
   {
     name: "Okra", emoji: "🫛", spacing_ft: 1.5, season: "summer",
     zone_min: "5a", zone_max: "11b",
     days_to_harvest: 60, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Sweet Potato", emoji: "🍠", spacing_ft: 1.5, season: "summer",
     zone_min: "5a", zone_max: "11b",
     days_to_harvest: 110, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Ginger", emoji: "🫚", spacing_ft: 1.0, season: "perennial",
     zone_min: "8b", zone_max: "11b",
     days_to_harvest: nil, category: "herb",
     water_needs: "high", sun: "part shade", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Lemongrass", emoji: "🎋", spacing_ft: 3.0, season: "perennial",
     zone_min: "8b", zone_max: "11b",
     days_to_harvest: nil, category: "herb",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Artichoke", emoji: "🌵", spacing_ft: 4.0, season: "perennial",
     zone_min: "7a", zone_max: "10b",
     days_to_harvest: nil, category: "vegetable",
     water_needs: "moderate", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Fig", emoji: "🟣", spacing_ft: 8.0, season: "perennial",
     zone_min: "7a", zone_max: "10b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "low", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Pomegranate", emoji: "🍎", spacing_ft: 8.0, season: "perennial",
     zone_min: "7b", zone_max: "11a",
     days_to_harvest: nil, category: "fruit",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Meyer Lemon", emoji: "🍋", spacing_ft: 6.0, season: "perennial",
     zone_min: "8b", zone_max: "11b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Banana", emoji: "🍌", spacing_ft: 8.0, season: "perennial",
     zone_min: "9a", zone_max: "11b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "high", sun: "full sun", deer_resistant: false,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Pineapple", emoji: "🍍", spacing_ft: 2.0, season: "perennial",
     zone_min: "10a", zone_max: "11b",
     days_to_harvest: nil, category: "fruit",
     water_needs: "low", sun: "full sun", deer_resistant: true,
-    attracts: nil, native_notes: nil,
+    attracts: nil, native_notes: nil
   },
   {
     name: "Hibiscus", emoji: "🌺", spacing_ft: 4.0, season: "perennial",
     zone_min: "9a", zone_max: "11b",
     days_to_harvest: nil, category: "flower",
     water_needs: "moderate", sun: "full sun", deer_resistant: false,
-    attracts: "hummingbirds, butterflies", native_notes: nil,
-  },
+    attracts: "hummingbirds, butterflies", native_notes: nil
+  }
 ].each do |attrs|
   Plant.find_or_initialize_by(name: attrs[:name]).tap { |p| p.update!(attrs) }
 end
@@ -940,7 +940,7 @@ companion! "Cucumber", "Rosemary",   "harmful",    "Strong aromatic herbs can in
 companion! "Cucumber", "Thyme",      "harmful",    "Thyme's volatile oils can suppress cucumber germination and growth."
 companion! "Cucumber", "Sage",       "harmful",    "Sage's volatile oils inhibit cucumber growth — keep culinary sage away from cucumbers."
 companion! "Cucumber", "Broccoli",   "beneficial", "Compatible companions; cucumber benefits brassicas by attracting pollinators."
-companion! "Cucumber", "Cauliflower","beneficial", "Same as Cucumber + Broccoli."
+companion! "Cucumber", "Cauliflower", "beneficial", "Same as Cucumber + Broccoli."
 companion! "Cucumber", "Dill",       "beneficial", "Young dill attracts beneficial insects to the cucumber patch."
 companion! "Cucumber", "Nasturtium", "beneficial", "Nasturtiums repel cucumber beetles and attract pollinators."
 companion! "Cucumber", "Pepper",     "beneficial", "Compatible; both warm-season crops with similar needs."
@@ -1020,7 +1020,7 @@ companion! "Sage", "Cucumber",     "harmful",    "Sage's volatile oils inhibit c
 
 companion! "Oregano", "Pepper",     "beneficial", "Oregano repels aphids in the pepper bed and attracts beneficial insects."
 companion! "Oregano", "Broccoli",   "harmful",    "Oregano inhibits brassica growth."
-companion! "Oregano", "Cauliflower","harmful",    "Same as Oregano + Broccoli."
+companion! "Oregano", "Cauliflower", "harmful",    "Same as Oregano + Broccoli."
 
 # ── Flower companions ─────────────────────────────────────────────────────────
 companion! "Sunflower", "Lavender",    "beneficial", "Both attract pollinators; lavender also deters aphids that feed on sunflower stems."
@@ -1079,8 +1079,8 @@ companion! "Turk's Cap",       "Agarita",              "beneficial", "Both nativ
 companion! "Esperanza",        "Rock Rose",            "beneficial", "Golden trumpets + pink cups bloom simultaneously summer through frost; same drought-tolerance level."
 companion! "Esperanza",        "Flame Acanthus",       "beneficial", "Bright warm colors that both peak in summer heat when little else blooms in TX."
 
-companion! "Purple Coneflower","Mexican Feathergrass",  "beneficial", "Prairie natives — coneflower's upright form contrasts beautifully with feathergrass movement."
-companion! "Purple Coneflower","Winecup",              "beneficial", "Native prairie pair — both thrive in limestone soils with low water."
+companion! "Purple Coneflower", "Mexican Feathergrass",  "beneficial", "Prairie natives — coneflower's upright form contrasts beautifully with feathergrass movement."
+companion! "Purple Coneflower", "Winecup",              "beneficial", "Native prairie pair — both thrive in limestone soils with low water."
 
 companion! "Sotol",            "Blackfoot Daisy",      "beneficial", "Architectural sotol rosette surrounded by daisy groundcover — classic xeriscape combo."
 companion! "Sotol",            "Mexican Feathergrass", "beneficial", "Spiky rosette + airy grass — the definitive Hill Country xeriscape pairing."
@@ -1117,7 +1117,7 @@ end
 
 [
   { name: "Tomato Bed",  x: 2,  y: 2, width: 8, height: 4, depth: 1,   rotation: 0, material: "cedar", emoji: "🍅" },
-  { name: "Herb Spiral", x: 12, y: 2, width: 5, height: 5, depth: 1.5, rotation: 0, material: "cypress", emoji: "🌿" },
+  { name: "Herb Spiral", x: 12, y: 2, width: 5, height: 5, depth: 1.5, rotation: 0, material: "cypress", emoji: "🌿" }
 ].each do |attrs|
   bed = yard.beds.find_or_initialize_by(name: attrs[:name])
   bed.update!(attrs)

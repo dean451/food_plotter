@@ -1,7 +1,7 @@
 class Plant < ApplicationRecord
   has_many :beds
   has_many :plant_companions, dependent: :destroy
-  has_many :plant_companions_as_companion, class_name: 'PlantCompanion', foreign_key: :companion_id, dependent: :destroy
+  has_many :plant_companions_as_companion, class_name: "PlantCompanion", foreign_key: :companion_id, dependent: :destroy
 
   validates :name, presence: true
   validates :spacing_ft, numericality: { greater_than: 0 }

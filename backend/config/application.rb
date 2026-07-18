@@ -44,7 +44,7 @@ module Backend
     # Add cookie and session middleware for magic-link auth
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore,
-      key: '_food_plotter_session',
+      key: "_food_plotter_session",
       same_site: :lax,
       secure: Rails.env.production?
   end

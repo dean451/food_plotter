@@ -4,7 +4,7 @@ class Api::V1::BedsController < ApplicationController
   def create
     bed = @yard.beds.new(bed_params)
     if bed.save
-      render json: bed.as_json(include: :plant).merge('extra_plants' => bed.extra_plant_data), status: :created
+      render json: bed.as_json(include: :plant).merge("extra_plants" => bed.extra_plant_data), status: :created
     else
       render json: bed.errors, status: :unprocessable_entity
     end
@@ -13,7 +13,7 @@ class Api::V1::BedsController < ApplicationController
   def update
     bed = @yard.beds.find(params[:id])
     if bed.update(bed_params)
-      render json: bed.as_json(include: :plant).merge('extra_plants' => bed.extra_plant_data)
+      render json: bed.as_json(include: :plant).merge("extra_plants" => bed.extra_plant_data)
     else
       render json: bed.errors, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Api::V1::BedsController < ApplicationController
   def set_yard
     @yard = Yard.find_by!(token: params[:yard_token] || params[:token])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Garden not found' }, status: :not_found
+    render json: { error: "Garden not found" }, status: :not_found
   end
 
   def bed_params

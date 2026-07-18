@@ -12,7 +12,7 @@ class Bed < ApplicationRecord
 
   validates :name, presence: true
   validates :width, :height, :depth, numericality: { greater_than: 0 }
-  validates :rotation, inclusion: { in: [0, 90, 180, 270] }
+  validates :rotation, inclusion: { in: [ 0, 90, 180, 270 ] }
 
   def perimeter
     2 * (width + height)
