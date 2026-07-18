@@ -680,7 +680,7 @@ export default function App() {
       {/* Yard */}
       {yard && (
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 16 }}>
             {editingYard ? (
               <form onSubmit={saveYard} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input
