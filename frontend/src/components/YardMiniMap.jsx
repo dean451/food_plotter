@@ -1,5 +1,4 @@
-import { formatCost, yardMaterials, installEstimate, OBSTACLE_KINDS } from '../utils.js'
-import { MATERIAL_COLORS } from './YardCanvas.jsx'
+import { formatCost, yardMaterials, installEstimate, OBSTACLE_KINDS, MATERIAL_COLORS } from '../utils.js'
 
 // Read-only miniature of the yard that rides in the right column once the main
 // canvas scrolls out of view — lets you watch beds land while browsing the

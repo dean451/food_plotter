@@ -1,4 +1,4 @@
-import { lumberCost, plantsCost, soilVolume, yardMaterials, installEstimate, PRICING, sqft, formatCost, OBSTACLE_KINDS } from '../utils.js'
+import { lumberCost, plantsCost, soilVolume, yardMaterials, installEstimate, isRow, PRICING, sqft, formatCost, OBSTACLE_KINDS } from '../utils.js'
 
 const th = { textAlign: 'left', padding: '6px 8px', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888', borderBottom: '2px solid #ddd' }
 const td = { padding: '6px 8px', fontSize: 12, borderBottom: '1px solid #eee', verticalAlign: 'top' }
@@ -62,9 +62,9 @@ export default function QuoteSheet({ yard, onClose }) {
             {beds.map((b) => (
               <tr key={b.id}>
                 <td style={{ ...td, fontWeight: 600 }}>{b.name}</td>
-                <td style={td}>{b.width}×{b.height}×{b.depth} ft {b.material}</td>
+                <td style={td}>{isRow(b) ? `${b.width}×${b.height} ft in-ground row` : `${b.width}×${b.height}×${b.depth} ft ${b.material}`}</td>
                 <td style={td}>{(b.extra_plants ?? []).map((p) => p.name).join(', ') || '—'}</td>
-                <td style={money}>${lumberCost(b)}</td>
+                <td style={money}>{lumberCost(b) ? `$${lumberCost(b)}` : '—'}</td>
                 <td style={money}>${Math.round(soilVolume(b) * PRICING.soilPerCuFtBagged)}</td>
                 <td style={money}>{plantsCost(b) ? `$${plantsCost(b)}` : '—'}</td>
               </tr>
@@ -78,7 +78,7 @@ export default function QuoteSheet({ yard, onClose }) {
             <div style={{ fontSize: 12, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#2e7d32', marginBottom: 6 }}>
               Option A — DIY materials
             </div>
-            <Row label={`Lumber + hardware (${beds.length} bed${beds.length !== 1 ? 's' : ''})`} value={`$${m.lumber}`} />
+            {m.lumber > 0 && <Row label={`Lumber + hardware (${beds.filter((b) => !isRow(b)).length} bed${beds.filter((b) => !isRow(b)).length !== 1 ? 's' : ''})`} value={`$${m.lumber}`} />}
             <Row
               label={m.soilMode === 'bulk'
                 ? `Soil — ${(m.soilCuFt / 27).toFixed(1)} cu yd bulk, delivered`
@@ -119,6 +119,7 @@ export default function QuoteSheet({ yard, onClose }) {
           })()}
           Estimate based on typical retail pricing ({formatCost(PRICING.lumberPerLf.cedar)}/lf cedar 2×6, ${PRICING.soilPerCuYdBulk}/cu yd bulk soil).
           Final installation quote confirmed after a site visit. Prices exclude tax, irrigation, and ground prep beyond normal leveling.
+          {beds.some(isRow) && ' In-ground rows assume workable native soil — heavy clay or rocky sites usually do better with raised beds.'}
         </div>
 
         {/* Actions — hidden when printing */}

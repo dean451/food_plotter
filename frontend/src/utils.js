@@ -2,6 +2,13 @@ export function sqft(v) {
   return Number.isInteger(v) ? `${v}` : v.toFixed(1)
 }
 
+export const MATERIAL_COLORS = {
+  cedar:       '#c8a96e',
+  pine:        '#ddc99a',
+  cypress:     '#9a7248',
+  'in-ground': '#a1887f',
+}
+
 // ─── Cost estimates ───────────────────────────────────────────────────────────
 
 export const PLANT_COST = {
@@ -27,20 +34,32 @@ export const PRICING = {
   soilPerCuYdBulk: 60,       // delivered bulk mix, $/cu yd
   bulkSoilDelivery: 75,      // flat delivery fee on bulk soil
   bulkThresholdCuFt: 27,     // at ≥1 cu yd, bulk beats bags
+  rowAmendmentDepthFt: 0.25, // in-ground rows get ~3" of compost tilled in, not a full fill
   install: {
     materialsMarkup: 0.15,   // procurement + handling on materials
     perBed: 45,              // assembly + placement labor
     perSqFt: 2.5,            // site prep, leveling, soil fill, planting
+    rowPerBed: 20,           // layout + edging — no assembly
+    rowPerSqFt: 3.5,         // sod removal, tilling, amending — more work than filling a box
     delivery: 60,            // crew + materials trip
   },
 }
 
+// In-ground row: planted straight into amended native soil, no lumber box
+export function isRow(bed) {
+  return bed.material === 'in-ground'
+}
+
+// Raised beds fill to their depth; in-ground rows just till in a few inches
+// of compost, whatever the stored depth says
 export function soilVolume(bed) {
-  return bed.width * bed.height * (bed.depth ?? 1)
+  const depth = isRow(bed) ? PRICING.rowAmendmentDepthFt : (bed.depth ?? 1)
+  return bed.width * bed.height * depth
 }
 
 // Lumber is bought by the linear foot of perimeter × stacked 2×6 layers
 export function lumberCost(bed) {
+  if (isRow(bed)) return 0
   const rate = PRICING.lumberPerLf[bed.material] ?? PRICING.lumberDefaultLf
   const layers = Math.max(1, Math.round((bed.depth ?? 1) / 0.5))
   const linearFt = 2 * (bed.width + bed.height) * layers
@@ -90,13 +109,16 @@ export function yardMaterials(beds) {
   return { lumber, plants, soil, soilCuFt, soilMode: useBulk ? 'bulk' : 'bagged', total: lumber + plants + soil }
 }
 
-// Professionally installed: materials + markup + labor + delivery
+// Professionally installed: materials + markup + labor + delivery.
+// Raised beds bill assembly + fill; in-ground rows bill ground prep instead.
 export function installEstimate(beds) {
   const materials = yardMaterials(beds)
-  const area = beds.reduce((s, b) => s + b.width * b.height, 0)
-  const { materialsMarkup, perBed, perSqFt, delivery } = PRICING.install
+  const { materialsMarkup, perBed, perSqFt, rowPerBed, rowPerSqFt, delivery } = PRICING.install
   const markup = Math.round(materials.total * materialsMarkup)
-  const labor = Math.round(perBed * beds.length + perSqFt * area)
+  const labor = Math.round(beds.reduce((s, b) => {
+    const area = b.width * b.height
+    return s + (isRow(b) ? rowPerBed + rowPerSqFt * area : perBed + perSqFt * area)
+  }, 0))
   return { materials, markup, labor, delivery, total: materials.total + markup + labor + delivery }
 }
 

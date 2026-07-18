@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { parseBed, parseObstacle, clampBedToYard, plantsPerBedShared, plantingWindow, nextBedName, lumberCost, soilCost, plantsCost, yardMaterials, installEstimate, findOpenSpot, OBSTACLE_KINDS } from './utils.js'
+import { parseBed, parseObstacle, clampBedToYard, plantsPerBedShared, plantingWindow, nextBedName, lumberCost, soilCost, plantsCost, soilVolume, isRow, yardMaterials, installEstimate, findOpenSpot, OBSTACLE_KINDS } from './utils.js'
 import YardCanvas from './components/YardCanvas.jsx'
 import BedSidebar from './components/BedSidebar.jsx'
 import PlantPanel from './components/PlantPanel.jsx'
@@ -269,7 +269,7 @@ export default function App() {
     setSelectedBedId(null)
   }
 
-  async function handleClearYard() {
+  async function handleClearBeds() {
     const removed = yard.beds
     const n = removed.length
     await clearBeds()
@@ -277,6 +277,18 @@ export default function App() {
       actionLabel: 'Undo',
       duration: 10000,
       onAction: async () => { for (const bed of removed) await restoreBed(bed) },
+    })
+  }
+
+  function handleClearObstacles() {
+    const removed = yard.obstacles ?? []
+    const n = removed.length
+    setSelectedObstacleId(null)
+    updateObstacles(() => [])
+    showToast(`Removed ${n} marked feature${n !== 1 ? 's' : ''} from "${yard.name}"`, {
+      actionLabel: 'Undo',
+      duration: 10000,
+      onAction: () => updateObstacles((obs) => [...obs, ...removed]),
     })
   }
 
@@ -380,21 +392,25 @@ export default function App() {
 
     row('LUMBER')
     row('Bed', 'Material', 'Width (ft)', 'Length (ft)', 'Depth (ft)', 'Layers of 2×6', 'Linear Ft Needed', 'Notes')
-    yard.beds.forEach((bed) => {
+    yard.beds.filter((bed) => !isRow(bed)).forEach((bed) => {
       const layers = Math.max(1, Math.round(bed.depth / 0.5))
       const linearFt = 2 * (bed.width + bed.height) * layers
       row(bed.name, bed.material, bed.width, bed.height, bed.depth, layers, linearFt,
         `${layers} layer${layers !== 1 ? 's' : ''} of 2×6 ${bed.material} — cut 2 at ${bed.width} ft, 2 at ${bed.height} ft`)
     })
+    if (yard.beds.some(isRow)) {
+      row('(in-ground rows need no lumber)')
+    }
     blank()
 
     row('SOIL')
     row('Bed', 'Cu Ft', 'Cu Yd', '2 cu ft Bags', 'Notes')
     let totalCuFt = 0
     yard.beds.forEach((bed) => {
-      const vol = bed.width * bed.height * bed.depth
+      const vol = soilVolume(bed)
       totalCuFt += vol
-      row(bed.name, vol.toFixed(1), (vol / 27).toFixed(2), Math.ceil(vol / 2), '')
+      row(bed.name, vol.toFixed(1), (vol / 27).toFixed(2), Math.ceil(vol / 2),
+        isRow(bed) ? 'in-ground row — till ~3 in of compost into native soil' : '')
     })
     row('TOTAL', totalCuFt.toFixed(1), (totalCuFt / 27).toFixed(2), Math.ceil(totalCuFt / 2),
       "Recommend a quality raised bed mix (e.g. Mel's mix or compost blend)")
@@ -698,7 +714,7 @@ export default function App() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               {yard.beds.length > 0 && (
                 <button
-                  onClick={handleClearYard}
+                  onClick={handleClearBeds}
                   title="Remove every bed (you can undo)"
                   style={{
                     padding: '5px 16px',
@@ -709,7 +725,23 @@ export default function App() {
                     cursor: 'pointer',
                   }}
                 >
-                  <span style={{ color: '#ef5350', fontWeight: 800 }}>✕</span> Clear Yard
+                  <span style={{ color: '#ef5350', fontWeight: 800 }}>✕</span> Clear Beds
+                </button>
+              )}
+              {(yard.obstacles ?? []).length > 0 && (
+                <button
+                  onClick={handleClearObstacles}
+                  title="Remove everything marked on the yard — house, driveway, etc. (you can undo)"
+                  style={{
+                    padding: '5px 16px',
+                    background: '#455a64',
+                    border: '3px solid #90a4ae',
+                    borderRadius: 5, color: '#cfd8dc',
+                    fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span style={{ color: '#ef5350', fontWeight: 800 }}>✕</span> Clear Obstacles
                 </button>
               )}
               <button
@@ -767,7 +799,6 @@ export default function App() {
                 onSelectObstacle={(id) => { setSelectedObstacleId(id); setSelectedBedId(null) }}
                 onBedMove={handleBedMove}
                 onBedDelete={handleBedDelete}
-                onBedDuplicate={handleBedDuplicate}
                 onBedRotate={handleBedRotate}
                 onBedResize={handleBedResize}
                 onObstacleMove={handleObstacleMove}

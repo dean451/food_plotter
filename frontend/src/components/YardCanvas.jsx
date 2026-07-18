@@ -1,17 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { spriteFor } from '../sprites.jsx'
-import { sqft, bedFootprint, clampBedToYard, rectsOverlap, OBSTACLE_KINDS } from '../utils.js'
+import { sqft, bedFootprint, clampBedToYard, rectsOverlap, isRow, MATERIAL_COLORS, OBSTACLE_KINDS } from '../utils.js'
 
 const PX_PER_FT = 20
 const SNAP_FT = 1
 const COMPANION_DISTANCE_FT = 15
-
-export const MATERIAL_COLORS = {
-  cedar:   '#c8a96e',
-  pine:    '#ddc99a',
-  cypress: '#9a7248',
-}
 
 function CompanionTooltip({ bed, selectedBed, rel, mouseX, mouseY }) {
   const conflicts = []
@@ -86,7 +80,7 @@ function CompanionTooltip({ bed, selectedBed, rel, mouseX, mouseY }) {
   )
 }
 
-export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedDuplicate, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed }) {
+export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed }) {
   const [hovered, setHovered] = useState(null)
   const [hoveredObstacle, setHoveredObstacle] = useState(null)
   const [localBeds, setLocalBeds] = useState(beds)
@@ -95,7 +89,12 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
   const dragging = useRef(null)
   const resizing = useRef(null)
 
+  // Intentional prop→state sync: localBeds/localObstacles mutate optimistically
+  // during drag/resize (see dragging/resizing refs below) without waiting on the
+  // parent's round trip to the API, then re-sync once the parent's props catch up.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setLocalBeds(beds) }, [beds])
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setLocalObstacles(obstacles ?? []) }, [obstacles])
 
   const W = yard.width * PX_PER_FT
@@ -437,9 +436,9 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
               <rect
                 x={bx} y={by} width={bw} height={bh}
                 fill={fill}
-                stroke={isOverlapping ? '#e53935' : isSelected ? '#1a73e8' : '#555'}
+                stroke={isOverlapping ? '#e53935' : isSelected ? '#1a73e8' : isRow(bed) ? '#6d4c41' : '#555'}
                 strokeWidth={isSelected || isOverlapping ? 2.5 : 1.5}
-                strokeDasharray={isOverlapping ? '6 3' : undefined}
+                strokeDasharray={isOverlapping ? '6 3' : isRow(bed) ? '4 3' : undefined}
                 rx={6}
               />
 

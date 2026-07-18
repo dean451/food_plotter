@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { parseBed, findOpenSpot } from '../utils.js'
 
-const MATERIALS = ['cedar', 'pine', 'cypress']
+const MATERIALS = [
+  { value: 'cedar', label: 'cedar' },
+  { value: 'pine', label: 'pine' },
+  { value: 'cypress', label: 'cypress' },
+  { value: 'in-ground', label: 'in-ground row (no box)' },
+]
 const EMPTY_FORM = { name: '', emoji: '🌱', width: 4, height: 4, depth: 1, material: 'cedar' }
 
 const btnStyle = {
@@ -58,7 +63,8 @@ export default function AddBedForm({ yard, onAdd }) {
         { field: 'emoji', label: 'Emoji', type: 'text', props: { style: { maxWidth: 60 } } },
         { field: 'width', label: 'Width (ft)', type: 'number', props: { min: 1, step: 0.5 } },
         { field: 'height', label: 'Height (ft)', type: 'number', props: { min: 1, step: 0.5 } },
-        { field: 'depth', label: 'Depth (ft)', type: 'number', props: { min: 0.5, step: 0.5 } },
+        // Rows go straight in the ground — depth only applies to a built box
+        ...(form.material === 'in-ground' ? [] : [{ field: 'depth', label: 'Depth (ft)', type: 'number', props: { min: 0.5, step: 0.5 } }]),
       ].map(({ field, label: lbl, type, props }) => (
         <div key={field} style={row}>
           <label style={labelStyle}>{lbl}</label>
@@ -68,7 +74,7 @@ export default function AddBedForm({ yard, onAdd }) {
       <div style={row}>
         <label style={labelStyle}>Material</label>
         <select style={inputStyle} value={form.material} onChange={set('material')}>
-          {MATERIALS.map((m) => <option key={m}>{m}</option>)}
+          {MATERIALS.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
         </select>
       </div>
       <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
