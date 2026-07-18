@@ -62,5 +62,8 @@ COPY --chown=rails:rails --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --chown=rails:rails --from=build /rails /rails
 
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-EXPOSE 80
+# Matches HTTP_PORT in fly.toml — the container runs as non-root (see USER
+# above), which can't bind port 80 itself. Fly's edge still serves 80/443
+# publicly and forwards to this port internally.
+EXPOSE 3000
 CMD ["./bin/thrust", "./bin/rails", "server"]

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Thin wrapper so `bin/rubocop` works from the monorepo root, not just from
+# backend/. Rubocop's binstub needs to run with backend/ as the working
+# directory so Bundler can find backend/Gemfile — passes through all args
+# (-a, -A, specific paths, etc.) untouched.
+cd "$(dirname "$0")/../backend" && exec bin/rubocop "$@"
