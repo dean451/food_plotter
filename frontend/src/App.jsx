@@ -181,6 +181,13 @@ export default function App() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
+    // handleBedDelete/handleBedDuplicate/handleBedMove/handleObstacleDelete are
+    // intentionally omitted: they only close over `yard` and the two selection
+    // ids, both already listed here, so the listener is rebuilt with fresh
+    // closures whenever those actually change. Adding the handlers themselves
+    // would just reinstall the listener on every render, since they're plain
+    // functions redefined each time.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBedId, selectedObstacleId, yard])
 
   function updateYardBeds(updater) {
