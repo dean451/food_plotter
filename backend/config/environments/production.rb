@@ -47,21 +47,31 @@ Rails.application.configure do
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # Set host to be used by links generated in mailer templates. Derived from
+  # APP_URL so it matches whatever MagicLinkMailer builds verify links against
+  # — falls back to a placeholder if APP_URL isn't set yet (see
+  # MagicLinkMailer, which fails loudly on that instead of guessing).
+  app_url = URI(ENV.fetch("APP_URL", "https://example.com"))
+  config.action_mailer.default_url_options = { host: app_url.host, protocol: app_url.scheme }
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
-
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
+  # No SMTP credentials yet: write mail to the Rails log instead of attempting
+  # (and crashing on) a live connection to localhost:25. Once you have
+  # credentials from an email provider — Resend's free tier (3,000/mo) is a
+  # reasonable default and speaks SMTP — set SMTP_USERNAME and SMTP_PASSWORD
+  # via `fly secrets set` and this switches over automatically.
+  if ENV["SMTP_USERNAME"].present? && ENV["SMTP_PASSWORD"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS", "smtp.resend.com"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      user_name: ENV.fetch("SMTP_USERNAME"),
+      password: ENV.fetch("SMTP_PASSWORD"),
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  else
+    config.action_mailer.delivery_method = :file
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
