@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { PlantIcon } from '../sprites.jsx'
-import { plantsPerBedShared, plantFitsZone } from '../utils.js'
+import { plantsPerBedShared, plantFitsZone, plantFitsRegion, REGION_INFO } from '../utils.js'
 import { SUN_LABEL, WATER_LABEL, panelStyle, pillBtnStyle } from '../ui.js'
 
 const MAX_ROSTER = 3
@@ -19,8 +19,9 @@ const CATEGORIES = [
   { key: 'native', label: 'Native' },
 ]
 
-function PlantTooltip({ plant, anchorY, anchorX, yardZone }) {
-  const fits = plantFitsZone(plant, yardZone)
+function PlantTooltip({ plant, anchorY, anchorX, yardZone, yardRegion }) {
+  const zoneFits   = plantFitsZone(plant, yardZone)
+  const regionFits = plantFitsRegion(plant, yardRegion)
   return (
     <div style={{
       position: 'fixed', top: anchorY, left: anchorX + 8,
@@ -41,9 +42,14 @@ function PlantTooltip({ plant, anchorY, anchorX, yardZone }) {
         {plant.attracts    && <span>🦋 Attracts {plant.attracts}</span>}
         {plant.zone_min && <span>🌡 Zones {plant.zone_min}–{plant.zone_max}</span>}
       </div>
-      {!fits && (
+      {!zoneFits && (
         <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #eee', color: '#c62828', fontSize: 11, lineHeight: 1.5 }}>
           ⚠ Not rated for zone {yardZone} — may need winter protection or annual replanting
+        </div>
+      )}
+      {zoneFits && !regionFits && (
+        <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #eee', color: '#e65100', fontSize: 11, lineHeight: 1.5 }}>
+          🗺 Native to {REGION_INFO[plant.region]?.label ?? plant.region}, not {REGION_INFO[yardRegion]?.label ?? yardRegion} — will grow here, just isn't local
         </div>
       )}
       {plant.native_notes && (
@@ -55,7 +61,7 @@ function PlantTooltip({ plant, anchorY, anchorX, yardZone }) {
   )
 }
 
-export default function PlantPanel({ bed, plants, zone, onAddPlant, onRemovePlant, maxHeight }) {
+export default function PlantPanel({ bed, plants, zone, region, onAddPlant, onRemovePlant, maxHeight }) {
   const [search, setSearch]     = useState('')
   const [category, setCategory] = useState('all')
   const [tooltip, setTooltip]   = useState(null)
@@ -70,8 +76,12 @@ export default function PlantPanel({ bed, plants, zone, onAddPlant, onRemovePlan
       (category === 'all' || p.category === category) &&
       p.name.toLowerCase().includes(search.toLowerCase())
     )
-    // out-of-zone plants sink to the bottom, alphabetical within each group
-    .sort((a, b) => plantFitsZone(b, zone) - plantFitsZone(a, zone))
+    // out-of-zone or non-local-native plants sink to the bottom
+    .sort((a, b) => {
+      const af = plantFitsZone(a, zone) && plantFitsRegion(a, region)
+      const bf = plantFitsZone(b, zone) && plantFitsRegion(b, region)
+      return bf - af
+    })
 
   function plantsPerBed(plant) {
     if (!bed) return null
@@ -147,8 +157,10 @@ export default function PlantPanel({ bed, plants, zone, onAddPlant, onRemovePlan
         {filtered.map((plant) => {
           const inRoster  = rosterIds.has(plant.id)
           const disabled  = !bed || full || inRoster
-          const count     = plantsPerBed(plant)
-          const fits      = plantFitsZone(plant, zone)
+          const count      = plantsPerBed(plant)
+          const zoneFits   = plantFitsZone(plant, zone)
+          const regionFits = plantFitsRegion(plant, region)
+          const fits       = zoneFits && regionFits
           return (
             <div
               key={plant.id}
@@ -177,9 +189,13 @@ export default function PlantPanel({ bed, plants, zone, onAddPlant, onRemovePlan
               <div style={{ textAlign: 'right', flexShrink: 0 }}>
                 {inRoster ? (
                   <span style={{ fontSize: 11, color: '#4caf50' }}>✓</span>
-                ) : !fits ? (
+                ) : !zoneFits ? (
                   <span style={{ fontSize: 9, padding: '1px 5px', borderRadius: 10, border: '1px solid #ef9a9a', color: '#c62828', whiteSpace: 'nowrap' }}>
                     zones {plant.zone_min}–{plant.zone_max}
+                  </span>
+                ) : !regionFits ? (
+                  <span style={{ fontSize: 9, padding: '1px 5px', borderRadius: 10, border: '1px solid #ffcc80', color: '#e65100', whiteSpace: 'nowrap' }}>
+                    not local native
                   </span>
                 ) : (
                   <span style={{ fontSize: 9, padding: '1px 5px', borderRadius: 10, background: SEASON_COLORS[plant.season] ?? '#ddd', color: '#fff' }}>
@@ -196,7 +212,7 @@ export default function PlantPanel({ bed, plants, zone, onAddPlant, onRemovePlan
       </div>
 
       {tooltip && createPortal(
-        <PlantTooltip plant={tooltip.plant} anchorY={tooltip.y} anchorX={tooltip.x} yardZone={zone} />,
+        <PlantTooltip plant={tooltip.plant} anchorY={tooltip.y} anchorX={tooltip.x} yardZone={zone} yardRegion={region} />,
         document.body
       )}
     </div>

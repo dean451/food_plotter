@@ -264,7 +264,7 @@
   {
     name: "Lantana", emoji: "🌺", spacing_ft: 3.5, season: "perennial",
     zone_min: "8a", zone_max: "11b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "monarchs, swallowtails, hummingbirds",
     native_notes: "Blooms spring through frost. Berries are toxic to livestock. Deadhead to keep blooming. One of the best monarch butterfly plants in TX.",
@@ -272,7 +272,7 @@
   {
     name: "Esperanza", emoji: "🌼", spacing_ft: 4.0, season: "perennial",
     zone_min: "8b", zone_max: "11b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, bees",
     native_notes: "Golden trumpet flowers June through frost. Dies to ground in hard freeze but returns reliably from roots. Thrives in heat and drought.",
@@ -280,7 +280,7 @@
   {
     name: "Turk's Cap", emoji: "🌺", spacing_ft: 4.0, season: "perennial",
     zone_min: "7a", zone_max: "11b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "part shade", deer_resistant: true,
     attracts: "hummingbirds, bees, butterflies",
     native_notes: "One of the few natives that thrives in deep shade. Red twisted petals never fully open — hummingbirds love it. Edible fruit tastes like watermelon candy.",
@@ -288,7 +288,7 @@
   {
     name: "Texas Sage", emoji: "💜", spacing_ft: 4.0, season: "perennial",
     zone_min: "8a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
     native_notes: "Called a 'barometer bush' — blooms after rainfall. Silver foliage. Zero irrigation once established. Never plant in clay or over-irrigated areas.",
@@ -296,7 +296,7 @@
   {
     name: "Agarita", emoji: "🌿", spacing_ft: 5.0, season: "perennial",
     zone_min: "7a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, birds",
     native_notes: "Thorny holly-like shrub — excellent wildlife barrier. Yellow spring flowers give way to tart red berries prized for jelly. Extremely drought tolerant once established.",
@@ -304,7 +304,7 @@
   {
     name: "Texas Mountain Laurel", emoji: "🌸", spacing_ft: 6.0, season: "perennial",
     zone_min: "7b", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees",
     native_notes: "Intoxicating grape Kool-Aid fragrance in spring. Seeds are toxic. Slow growing (1 ft/yr) but very long-lived. Native to Hill Country limestone.",
@@ -312,7 +312,7 @@
   {
     name: "Rock Rose", emoji: "🌷", spacing_ft: 3.0, season: "perennial",
     zone_min: "8a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
     native_notes: "Pink blooms from spring through frost. Self-seeds freely — great naturalizer on slopes and rocky soil. Cut back hard in late winter to renew.",
@@ -320,7 +320,7 @@
   {
     name: "Flame Acanthus", emoji: "🔥", spacing_ft: 3.0, season: "perennial",
     zone_min: "7a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, butterflies",
     native_notes: "Top hummingbird plant in TX — a must for migration stopovers. Dies to ground in freeze but returns vigorously in spring. Tubular orange-red flowers midsummer through fall.",
@@ -328,7 +328,7 @@
   {
     name: "Blackfoot Daisy", emoji: "🌼", spacing_ft: 1.5, season: "perennial",
     zone_min: "5a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
     native_notes: "Honey-scented white daisies nearly year-round in TX. Extremely drought tolerant. Great edging plant. Pairs beautifully with Autumn Sage and Mexican Feathergrass.",
@@ -336,7 +336,7 @@
   {
     name: "Winecup", emoji: "🍷", spacing_ft: 1.5, season: "perennial",
     zone_min: "4a", zone_max: "8b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "bees, butterflies",
     native_notes: "Trailing groundcover with magenta cups. Deep taproot makes it extremely drought tolerant once established — don't transplant mature plants. Thrives in rocky limestone soil.",
@@ -344,7 +344,7 @@
   {
     name: "Autumn Sage", emoji: "🌹", spacing_ft: 2.0, season: "perennial",
     zone_min: "6a", zone_max: "9b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "hummingbirds, bees",
     native_notes: "Key hummingbird fuel stop during spring and fall migration. Blooms heaviest in spring and fall. Pairs beautifully with Blackfoot Daisy and Mexican Feathergrass.",
@@ -352,7 +352,7 @@
   {
     name: "Purple Coneflower", emoji: "💐", spacing_ft: 1.5, season: "summer",
     zone_min: "3a", zone_max: "9b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: false,
     attracts: "bees, butterflies, goldfinches",
     native_notes: "Leave seed heads standing through winter — goldfinches eat them. Native to TX prairies. Good cut flower. More water tolerant than most TX natives.",
@@ -360,7 +360,7 @@
   {
     name: "Sotol", emoji: "🌵", spacing_ft: 5.0, season: "perennial",
     zone_min: "7a", zone_max: "11b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: nil,
     native_notes: "Dramatic architectural rosette of narrow serrated leaves. Each rosette blooms once (tall spike) then dies, but offsets form a colony. Staple of Hill Country xeriscape.",
@@ -368,7 +368,7 @@
   {
     name: "Mexican Feathergrass", emoji: "🌾", spacing_ft: 2.0, season: "perennial",
     zone_min: "6a", zone_max: "10b",
-    days_to_harvest: nil, category: "native",
+    days_to_harvest: nil, category: "native", region: "south_central",
     water_needs: "low", sun: "full sun", deer_resistant: true,
     attracts: "birds",
     native_notes: "Silky, airy texture — stunning in evening light. Self-seeds prolifically, can spread. Pairs perfectly with Blackfoot Daisy and Autumn Sage. Birds eat the seeds.",
@@ -376,11 +376,212 @@
   {
     name: "Chiltepín", emoji: "🌶️", spacing_ft: 2.0, season: "summer",
     zone_min: "8a", zone_max: "11b",
-    days_to_harvest: 90, category: "native",
+    days_to_harvest: 90, category: "native", region: "south_central",
     water_needs: "low", sun: "part shade", deer_resistant: true,
     attracts: "birds",
     native_notes: "Wild ancestor of all chile peppers. Tiny fruits are intensely hot — birds eat them and spread seeds. Uniquely prefers part shade unlike most peppers. Prized by TX chefs.",
   },
+  # ── Northeast Natives ─────────────────────────────────────────────────────────
+  # Sources: New England Wild Flower Society (Native Plant Trust), USDA PLANTS
+  {
+    name: "New England Aster", emoji: "🟣", spacing_ft: 2.0, season: "fall",
+    zone_min: "4a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "moderate", sun: "full sun", deer_resistant: false,
+    attracts: "bees, butterflies",
+    native_notes: "One of the last big nectar sources before frost — a critical fuel stop for migrating monarchs. Purple daisy-like blooms cover the plant late September into October.",
+  },
+  {
+    name: "Wild Lupine", emoji: "💜", spacing_ft: 1.5, season: "spring",
+    zone_min: "3a", zone_max: "7b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "The only host plant the endangered Karner blue butterfly can lay eggs on — a real conservation pick, not just a pretty spike of blue-purple blooms. Wants sandy, well-drained soil.",
+  },
+  {
+    name: "Wild Bergamot", emoji: "🌸", spacing_ft: 2.0, season: "summer",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "moderate", sun: "full sun", deer_resistant: true,
+    attracts: "bees, hummingbirds, butterflies",
+    native_notes: "A mint-family relative — lavender flower clusters smell like oregano when brushed. Give it airflow; it's prone to powdery mildew in still, humid spots.",
+  },
+  {
+    name: "Little Bluestem", emoji: "🌾", spacing_ft: 1.5, season: "perennial",
+    zone_min: "3a", zone_max: "9b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "birds",
+    native_notes: "Blue-green in summer, copper-orange all winter — one of the few grasses with real cold-season presence. Fluffy seed heads feed overwintering birds.",
+  },
+  {
+    name: "Winterberry", emoji: "🍒", spacing_ft: 5.0, season: "perennial",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "moderate", sun: "full sun", deer_resistant: false,
+    attracts: "birds",
+    native_notes: "A deciduous holly — drops its leaves and leaves the branches loaded with red berries all winter. Needs a male and female plant nearby to fruit; only the female berries.",
+  },
+  {
+    name: "Wild Columbine", emoji: "🌺", spacing_ft: 1.0, season: "spring",
+    zone_min: "3a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "moderate", sun: "part shade", deer_resistant: true,
+    attracts: "hummingbirds",
+    native_notes: "Nectar spurs are built for hummingbird tongues and little else — one of the first blooms migrating hummingbirds find in spring. Self-seeds gently in woodland edges.",
+  },
+  {
+    name: "Joe-Pye Weed", emoji: "🌸", spacing_ft: 3.0, season: "summer",
+    zone_min: "4a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "high", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "Grows 5-7 ft tall with dusty-pink flower domes — a magnet for swallowtails. Wants consistently moist soil; a natural fit for a low spot that stays damp.",
+  },
+  {
+    name: "Foamflower", emoji: "🤍", spacing_ft: 1.0, season: "spring",
+    zone_min: "4a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "northeast",
+    water_needs: "moderate", sun: "part shade", deer_resistant: true,
+    attracts: "bees",
+    native_notes: "A spreading woodland groundcover with foamy white spring spikes. One of the better natives for shady spots where turf won't grow.",
+  },
+
+  # ── Upper Midwest & Prairie Natives ───────────────────────────────────────────
+  # Sources: Wild Ones, Missouri Botanical Garden, USDA PLANTS
+  {
+    name: "Purple Prairie Clover", emoji: "🟣", spacing_ft: 1.5, season: "summer",
+    zone_min: "3a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "A true tallgrass prairie legume — fixes its own nitrogen and needs none added. Thimble-shaped purple flower heads bloom bottom-to-top over several weeks.",
+  },
+  {
+    name: "Prairie Blazing Star", emoji: "💜", spacing_ft: 1.5, season: "summer",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "moderate", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "Tall purple spikes that open top-down, unusual among spike-flowering plants. One of the top monarch nectar stops during fall migration through the Midwest.",
+  },
+  {
+    name: "Compass Plant", emoji: "🌻", spacing_ft: 3.0, season: "summer",
+    zone_min: "3a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees",
+    native_notes: "An original tallgrass prairie icon — leaves orient north-south to dodge midday sun, hence the name. Deep taproot takes 2-3 years to establish before it blooms; be patient.",
+  },
+  {
+    name: "Butterfly Milkweed", emoji: "🧡", spacing_ft: 1.5, season: "summer",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "The only milkweed monarch caterpillars can eat that also stays tidy and clump-forming rather than running. Bright orange clusters, drought-tough once established.",
+  },
+  {
+    name: "Prairie Dropseed", emoji: "🌾", spacing_ft: 2.0, season: "perennial",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "birds",
+    native_notes: "Fine-textured fountain grass with a fragrance gardeners describe as buttered popcorn or cilantro when it flowers in late summer. Slow to establish, long-lived once it does.",
+  },
+  {
+    name: "Pale Purple Coneflower", emoji: "🌸", spacing_ft: 1.5, season: "summer",
+    zone_min: "3a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees, butterflies",
+    native_notes: "Narrower, droopier petals than the familiar purple coneflower, and a true remnant-prairie species. Extremely drought tolerant once its taproot is established.",
+  },
+  {
+    name: "Rattlesnake Master", emoji: "⭐", spacing_ft: 2.0, season: "summer",
+    zone_min: "4a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "bees",
+    native_notes: "Spiky yucca-like foliage topped with golf-ball flower clusters that pull in an unusual crowd of wasps and soldier beetles, not just bees. Bitter roots keep deer and rabbits off it entirely.",
+  },
+  {
+    name: "Switchgrass", emoji: "🌾", spacing_ft: 2.5, season: "perennial",
+    zone_min: "3a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "upper_midwest",
+    water_needs: "low", sun: "full sun", deer_resistant: true,
+    attracts: "birds",
+    native_notes: "One of the original tallgrass prairie matrix grasses — airy seed heads by late summer, gold-to-tan through winter, and dense enough that birds nest in it.",
+  },
+
+  # ── Pacific Northwest Natives ──────────────────────────────────────────────────
+  # Sources: Washington Native Plant Society, Oregon Flora, USDA PLANTS
+  {
+    name: "Oregon Grape", emoji: "🫐", spacing_ft: 3.0, season: "perennial",
+    zone_min: "5a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "low", sun: "part shade", deer_resistant: true,
+    attracts: "bees, birds",
+    native_notes: "Oregon's state flower — holly-like evergreen leaves, yellow spring blooms, and tart blue berries birds strip fast (also good for jelly if you beat them to it). Spiny leaves keep deer off.",
+  },
+  {
+    name: "Red Flowering Currant", emoji: "🌸", spacing_ft: 4.0, season: "spring",
+    zone_min: "6a", zone_max: "9b",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "low", sun: "full sun", deer_resistant: false,
+    attracts: "hummingbirds, bees",
+    native_notes: "Blooms so early it's often the first flower migrating Rufous hummingbirds find each spring — the two are believed to have co-evolved timing. Berries are edible but bland; birds eat them anyway.",
+  },
+  {
+    name: "Salal", emoji: "🍇", spacing_ft: 3.0, season: "perennial",
+    zone_min: "6a", zone_max: "9b",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "moderate", sun: "part shade", deer_resistant: false,
+    attracts: "birds",
+    native_notes: "The classic PNW forest-floor evergreen — leathery leaves, dark edible berries long used by coastal Indigenous peoples for food. Spreads by rhizome to form dense understory cover.",
+  },
+  {
+    name: "Camas", emoji: "🔵", spacing_ft: 0.5, season: "spring",
+    zone_min: "4a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "high", sun: "full sun", deer_resistant: true,
+    attracts: "bees",
+    native_notes: "Bulbs were a staple food crop for Pacific Northwest Indigenous peoples, traded widely and pit-roasted. Wants a wet spring and bone-dry summer dormancy — don't irrigate once it yellows.",
+  },
+  {
+    name: "Douglas Aster", emoji: "💜", spacing_ft: 1.5, season: "fall",
+    zone_min: "5a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "moderate", sun: "full sun", deer_resistant: false,
+    attracts: "bees, butterflies",
+    native_notes: "One of the last nectar sources standing into fall on the west side of the Cascades, when almost nothing else is blooming for late-season pollinators.",
+  },
+  {
+    name: "Vine Maple", emoji: "🍁", spacing_ft: 8.0, season: "perennial",
+    zone_min: "6a", zone_max: "9a",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "moderate", sun: "part shade", deer_resistant: false,
+    attracts: nil,
+    native_notes: "An understory tree that stays multi-stemmed and shrubby in shade, or upright in more sun. Brilliant orange-red fall color even in a wet, gray Northwest autumn.",
+  },
+  {
+    name: "Western Sword Fern", emoji: "🌿", spacing_ft: 3.0, season: "perennial",
+    zone_min: "5a", zone_max: "9b",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "moderate", sun: "part shade", deer_resistant: true,
+    attracts: nil,
+    native_notes: "The default fern of PNW forest floors — evergreen, tolerates deep shade and dry summer shade alike once established. Rarely browsed, easy to divide.",
+  },
+  {
+    name: "Nootka Rose", emoji: "🌹", spacing_ft: 5.0, season: "spring",
+    zone_min: "4a", zone_max: "8b",
+    days_to_harvest: nil, category: "native", region: "pacific_northwest",
+    water_needs: "moderate", sun: "full sun", deer_resistant: false,
+    attracts: "bees, birds",
+    native_notes: "A true wild rose — single pink blooms, then hips that hang on through winter for birds. Suckers into thickets, so give it room or a hard edge to contain it.",
+  },
+
   # ── Zone-expansion catalog (cold-climate, subtropical, flowers) ──────────────
   {
     name: "Rhubarb", emoji: "🥧", spacing_ft: 3.0, season: "perennial",
@@ -887,6 +1088,21 @@ companion! "Sotol",            "Agarita",              "beneficial", "Both extre
 
 companion! "Chiltepín",        "Turk's Cap",           "beneficial", "Both prefer part shade and attract birds — birds that eat chiltepín spread seeds just like they spread Turk's Cap."
 companion! "Chiltepín",        "Autumn Sage",          "beneficial", "Chiltepín's fiery red fruits and Autumn Sage's red blooms are both bird-attracting; similar low-water needs."
+
+# ── Northeast Native companions ────────────────────────────────────────────────
+companion! "New England Aster", "Wild Bergamot",       "beneficial", "Staggered bloom times — bergamot feeds pollinators all summer, aster takes over as the last big nectar source before frost."
+companion! "Wild Lupine",       "Little Bluestem",     "beneficial", "Classic sandy-meadow pairing — bluestem's upright form and winter color set off lupine's spring bloom."
+companion! "Joe-Pye Weed",      "Winterberry",          "beneficial", "Both want consistently moist soil — a natural pair for a low, damp corner of the yard."
+
+# ── Upper Midwest & Prairie Native companions ─────────────────────────────────
+companion! "Compass Plant",         "Prairie Dropseed",       "beneficial", "Tallgrass prairie matrix pairing — dropseed's fine texture at the base, compass plant towering above."
+companion! "Purple Prairie Clover", "Butterfly Milkweed",     "beneficial", "Prairie clover fixes nitrogen that neighboring prairie natives, including milkweed, benefit from."
+companion! "Prairie Blazing Star",  "Rattlesnake Master",     "beneficial", "Both are top-tier fall monarch and pollinator stops in remnant prairie plantings."
+
+# ── Pacific Northwest Native companions ───────────────────────────────────────
+companion! "Oregon Grape",          "Western Sword Fern",     "beneficial", "Both tolerate deep shade and dry summer conditions under established trees — a low-maintenance understory duo."
+companion! "Red Flowering Currant", "Salal",                  "beneficial", "Currant blooms and fruits early, salal fills in as evergreen understory cover the rest of the year."
+companion! "Camas",                 "Douglas Aster",          "beneficial", "Camas blooms and goes dormant by early summer; aster fills the same bed with color into fall."
 
 # ── Cross-category companions ─────────────────────────────────────────────────
 companion! "Lavender",         "Lantana",              "beneficial", "Both repel deer, attract pollinators, and thrive in full sun with minimal water."

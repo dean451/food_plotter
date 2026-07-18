@@ -1,4 +1,4 @@
-import { sqft, lumberCost, soilCost, plantsCost, formatCost, plantsPerBedShared, plantFitsZone } from '../utils.js'
+import { sqft, lumberCost, soilCost, plantsCost, formatCost, plantsPerBedShared, plantFitsZone, plantFitsRegion } from '../utils.js'
 import { PlantIcon } from '../sprites.jsx'
 import { SUN_LABEL, WATER_LABEL, panelStyle } from '../ui.js'
 
@@ -15,7 +15,7 @@ function intraBedPairs(extraPlants) {
   return pairs
 }
 
-export default function BedSidebar({ bed, zone, onRemovePlant, maxHeight }) {
+export default function BedSidebar({ bed, zone, region, onRemovePlant, maxHeight }) {
   const outerStyle = maxHeight ? { ...panelStyle, maxHeight } : panelStyle
 
   if (!bed) {
@@ -91,6 +91,11 @@ export default function BedSidebar({ bed, zone, onRemovePlant, maxHeight }) {
               {!plantFitsZone(plant, zone) && (
                 <span style={{ color: '#c62828', gridColumn: '1 / -1' }}>
                   ⚠ Zones {plant.zone_min}–{plant.zone_max} — not rated for {zone}
+                </span>
+              )}
+              {plantFitsZone(plant, zone) && !plantFitsRegion(plant, region) && (
+                <span style={{ color: '#e65100', gridColumn: '1 / -1' }}>
+                  🗺 Native elsewhere, not your region
                 </span>
               )}
             </div>

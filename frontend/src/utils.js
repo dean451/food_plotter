@@ -174,6 +174,33 @@ export function plantFitsZone(plant, yardZone) {
   return z >= lo && z <= hi
 }
 
+// ─── Ecological region ─────────────────────────────────────────────────────────
+// Distinct from hardiness zone: zone captures winter cold tolerance, region
+// captures whether a plant is actually native to where you garden. A Texas
+// Hill Country native and a Vermont native can share a hardiness zone and
+// still have nothing to do with each other ecologically.
+
+export const REGION_CHOICES = [
+  'south_central', 'northeast', 'upper_midwest', 'pacific_northwest',
+]
+
+export const REGION_INFO = {
+  south_central:     { emoji: '🌵', label: 'South Central / Texas Hill Country' },
+  northeast:         { emoji: '🍁', label: 'Northeast / New England' },
+  upper_midwest:     { emoji: '🌾', label: 'Upper Midwest & Prairie' },
+  pacific_northwest: { emoji: '🌲', label: 'Pacific Northwest' },
+}
+
+// Region only ever narrows "native" category plants. Everything else (annual
+// vegetables, herbs, etc.) is judged on zone alone — region has no opinion on
+// whether a tomato belongs in your yard. A native plant fits if the yard has
+// no region set, the plant has no region tag, or the two match.
+export function plantFitsRegion(plant, yardRegion) {
+  if (plant.category !== 'native') return true
+  if (!yardRegion || !plant.region) return true
+  return plant.region === yardRegion
+}
+
 // Rough spring/fall planting anchors by whole zone (frost dates shift ~2 weeks per zone)
 const SPRING_START = {
   3: 'late May', 4: 'mid May', 5: 'early May', 6: 'mid April',

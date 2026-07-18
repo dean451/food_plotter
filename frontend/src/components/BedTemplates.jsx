@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SPRITES } from '../sprites.jsx'
-import { parseBed, plantFitsZone, findOpenSpot, nextBedName, yardMaterials, installEstimate, formatCost, rectsOverlap, OBSTACLE_KINDS } from '../utils.js'
+import { parseBed, plantFitsZone, plantFitsRegion, findOpenSpot, nextBedName, yardMaterials, installEstimate, formatCost, rectsOverlap, OBSTACLE_KINDS } from '../utils.js'
 import { pillBtnStyle } from '../ui.js'
 import { BED_TEMPLATES, GARDEN_SETS, GARDEN_PLANS } from '../templates.js'
 
@@ -20,7 +20,7 @@ const PATH_FT = 2
 // The block prefers the yard's center but shifts to the nearest offset where
 // no bed lands on an obstacle; `blocked` means the plan fits the yard's size
 // but there's no placement clear of what's marked on it.
-export function layoutPlan(plan, yardWidth, yardHeight, obstacles = []) {
+function layoutPlan(plan, yardWidth, yardHeight, obstacles = []) {
   const grid = plan.rows.map((row) =>
     row.map((label) => BED_TEMPLATES.find((t) => t.label === label)).filter(Boolean)
   )
@@ -88,11 +88,11 @@ const templateBtn = {
   borderRadius: 8, cursor: 'pointer', textAlign: 'center', lineHeight: 1.5, width: '100%',
 }
 
-function ZoneWarning({ unfit, zone }) {
+function ZoneWarning({ unfit }) {
   if (!unfit.length) return null
   return (
     <span style={{ fontSize: 9, color: '#c62828', display: 'block', marginTop: 3, lineHeight: 1.3 }}>
-      ⚠ {unfit.join(', ')} not rated for zone {zone}
+      ⚠ {unfit.join(', ')} not suited to your zone or region
     </span>
   )
 }
@@ -106,7 +106,7 @@ function ConflictWarning({ pairs }) {
   )
 }
 
-function SetCard({ set, busy, onClick, unfit, zone, conflicts }) {
+function SetCard({ set, busy, onClick, unfit, conflicts }) {
   const templateBeds = set.beds.map((label) => BED_TEMPLATES.find((t) => t.label === label)).filter(Boolean)
   const allPlants = [...new Set(templateBeds.flatMap((t) => t.plants ?? []))]
   const totalSqft = templateBeds.reduce((s, t) => s + t.width * t.height, 0)
@@ -136,7 +136,7 @@ function SetCard({ set, busy, onClick, unfit, zone, conflicts }) {
       <span style={{ fontSize: 9, color: '#bbb', display: 'block', marginTop: 3 }}>
         {templateBeds.length} beds · {totalSqft} sq ft
       </span>
-      <ZoneWarning unfit={unfit} zone={zone} />
+      <ZoneWarning unfit={unfit} />
       <ConflictWarning pairs={conflicts} />
     </button>
   )
@@ -196,7 +196,7 @@ function PlanPreview({ plan, layout, yard }) {
   )
 }
 
-export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, onRenameYard }) {
+export default function BedTemplates({ yard, plants, zone, region, onAdd, onClearBeds, onRenameYard }) {
   const yardToken = yard.token
   const [mode, setMode]   = useState('beds')
   const [busy, setBusy]   = useState(null)
@@ -206,7 +206,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
   function unfitPlants(names) {
     return [...new Set(names ?? [])].filter((n) => {
       const p = plantByName.get(n)
-      return p && !plantFitsZone(p, zone)
+      return p && (!plantFitsZone(p, zone) || !plantFitsRegion(p, region))
     })
   }
 
@@ -383,7 +383,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
                 <span style={{ fontWeight: 600, fontSize: 11, display: 'block', marginTop: 2, lineHeight: 1.2 }}>{t.label}</span>
                 <span style={{ fontSize: 9, color: '#999', display: 'block', lineHeight: 1.3, marginTop: 2 }}>{t.desc}</span>
                 <span style={{ fontSize: 9, color: '#bbb', display: 'block', marginTop: 1 }}>{t.width}×{t.height} ft</span>
-                <ZoneWarning unfit={unfit} zone={zone} />
+                <ZoneWarning unfit={unfit} />
                 <ConflictWarning pairs={harmfulPairs(t.plants)} />
               </button>
               )
@@ -399,7 +399,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
             return (
               <SetCard
                 key={set.key} set={set} busy={busy} onClick={() => addSet(set)}
-                unfit={unfitPlants(setPlants)} zone={zone} conflicts={harmfulPairs(setPlants)}
+                unfit={unfitPlants(setPlants)} conflicts={harmfulPairs(setPlants)}
               />
             )
           })}
@@ -459,7 +459,7 @@ export default function BedTemplates({ yard, plants, zone, onAdd, onClearBeds, o
                 <span style={{ fontSize: 11, color: '#444', display: 'block', marginTop: 4, fontWeight: 600 }}>
                   ~{formatCost(diy)} DIY · ~{formatCost(installed)} installed
                 </span>
-                <ZoneWarning unfit={unfit} zone={zone} />
+                <ZoneWarning unfit={unfit} />
                 <ConflictWarning pairs={harmfulPairs(allPlants)} />
                 {!layout.fits && (
                   <span style={{ fontSize: 10, color: '#c62828', display: 'block', marginTop: 4 }}>

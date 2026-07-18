@@ -7,6 +7,7 @@ import BedTemplates from './components/BedTemplates.jsx'
 import AddBedForm from './components/AddBedForm.jsx'
 import YardStats from './components/YardStats.jsx'
 import ZonePicker from './components/ZonePicker.jsx'
+import RegionPicker from './components/RegionPicker.jsx'
 import Toasts from './components/Toasts.jsx'
 import QuoteSheet from './components/QuoteSheet.jsx'
 import ObstacleBar from './components/ObstacleBar.jsx'
@@ -550,6 +551,15 @@ export default function App() {
     if (res.ok) setYard(parseYard(await res.json()))
   }
 
+  async function saveRegion(region) {
+    const res = await fetch(`/api/v1/yards/${yard.token}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ yard: { region } }),
+    })
+    if (res.ok) setYard(parseYard(await res.json()))
+  }
+
   function copyShareLink() {
     navigator.clipboard.writeText(window.location.href)
     setCopiedUrl(true)
@@ -709,6 +719,7 @@ export default function App() {
                   title="Rename or resize yard"
                 >✎</button>
                 <ZonePicker zone={yard.hardiness_zone} onChange={saveZone} />
+                <RegionPicker region={yard.region} onChange={saveRegion} />
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -784,6 +795,7 @@ export default function App() {
               <PlantPanel
                 bed={selectedBed} plants={plants}
                 zone={yard.hardiness_zone}
+                region={yard.region}
                 onAddPlant={handleAddPlantToBed}
                 onRemovePlant={handleRemovePlantFromBed}
                 maxHeight="calc(100vh - 56px)"
@@ -811,7 +823,7 @@ export default function App() {
               <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <ObstacleBar onAdd={handleObstacleAdd} />
                 <AddBedForm yard={yard} onAdd={handleBedAdd} />
-                <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
+                <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} region={yard.region} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
               </div>
             </div>
             <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
@@ -821,6 +833,7 @@ export default function App() {
                 <BedSidebar
                   bed={selectedBed}
                   zone={yard.hardiness_zone}
+                  region={yard.region}
                   onRemovePlant={handleRemovePlantFromBed}
                   maxHeight="calc(100vh - 56px)"
                 />
