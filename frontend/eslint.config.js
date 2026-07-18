@@ -17,5 +17,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // The codebase destructures fields off an object purely to exclude them
+      // from a `...rest` spread (e.g. `const { id, ...attrs } = bed`). Without
+      // this, every one of those omitted fields trips no-unused-vars.
+      'no-unused-vars': ['error', { ignoreRestSiblings: true }],
+    },
   },
 ])

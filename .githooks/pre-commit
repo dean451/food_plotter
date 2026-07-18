@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Pre-commit lint gate — only runs the linter for the stack you actually touched.
+#
+# Enabled via `git config core.hooksPath .githooks`. Run `fp-hooks-install`
+# (see scripts.local.sh) once per clone to turn it on.
+#
+# Skip a single commit with: git commit --no-verify
+
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+STAGED="$(git diff --cached --name-only --diff-filter=ACM)"
+FAIL=0
+
+FRONTEND_FILES="$(echo "$STAGED" | grep -E '^frontend/.*\.(js|jsx|ts|tsx)$' || true)"
+if [ -n "$FRONTEND_FILES" ]; then
+  echo "→ eslint (frontend, staged files only)"
+  REL_FRONTEND="$(echo "$FRONTEND_FILES" | sed 's|^frontend/||')"
+  (cd "$ROOT/frontend" && npx eslint $REL_FRONTEND) || FAIL=1
+fi
+
+BACKEND_RB="$(echo "$STAGED" | grep '^backend/.*\.rb$' || true)"
+if [ -n "$BACKEND_RB" ]; then
+  echo "→ rubocop (backend)"
+  REL_FILES="$(echo "$BACKEND_RB" | sed 's|^backend/||')"
+  (cd "$ROOT/backend" && bin/rubocop $REL_FILES) || FAIL=1
+fi
+
+if [ "$FAIL" -ne 0 ]; then
+  echo ""
+  echo "Pre-commit lint failed. Fix the issues above, or bypass with 'git commit --no-verify'."
+  exit 1
+fi
+
+exit 0
