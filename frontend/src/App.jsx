@@ -737,7 +737,7 @@ export default function App() {
                 )}
               </div>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, ...(isMobile ? { width: '100%', justifyContent: 'center' } : {}) }}>
               {!isMobile && yard.beds.length > 0 && (
                 <button
                   onClick={handleClearBeds}
