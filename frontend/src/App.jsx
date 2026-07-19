@@ -921,10 +921,12 @@ export default function App() {
                   <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.35)', zIndex: 199 }} onClick={() => setMobileDetailBedId(null)} />
                   <div style={{
                     position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 200,
+                    width: '100%', boxSizing: 'border-box',
                     background: '#fff', borderRadius: '14px 14px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,.2)',
-                    maxHeight: '75vh', overflowY: 'auto', padding: 16,
+                    maxHeight: '75vh', overflowY: 'auto', overflowX: 'hidden',
+                    padding: '10px 12px calc(12px + env(safe-area-inset-bottom, 0px))',
                   }}>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>
                       <button
                         onClick={() => setMobileDetailBedId(null)}
                         style={{ border: 'none', background: 'none', fontSize: 18, color: '#888', cursor: 'pointer', padding: 4 }}
@@ -936,6 +938,7 @@ export default function App() {
                       region={yard.region}
                       onAddPlant={handleAddPlantToBed}
                       onRemovePlant={handleRemovePlantFromBed}
+                      bare
                     />
                     <div style={{ marginTop: 12 }}>
                       <BedSidebar
@@ -943,6 +946,7 @@ export default function App() {
                         zone={yard.hardiness_zone}
                         region={yard.region}
                         onRemovePlant={handleRemovePlantFromBed}
+                        bare
                       />
                     </div>
                   </div>

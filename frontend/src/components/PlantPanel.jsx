@@ -61,11 +61,17 @@ function PlantTooltip({ plant, anchorY, anchorX, yardZone, yardRegion }) {
   )
 }
 
-export default function PlantPanel({ bed, plants, zone, region, onAddPlant, onRemovePlant, maxHeight }) {
+export default function PlantPanel({ bed, plants, zone, region, onAddPlant, onRemovePlant, maxHeight, bare = false }) {
   const [search, setSearch]     = useState('')
   const [category, setCategory] = useState('all')
   const [tooltip, setTooltip]   = useState(null)
-  const outerStyle = maxHeight ? { ...panelStyle, maxHeight } : panelStyle
+  // bare: dropped into a container that already has its own border/rounding
+  // (the mobile bottom sheet) — a nested card here just wastes width.
+  const outerStyle = {
+    ...panelStyle,
+    ...(bare ? { border: 'none', borderRadius: 0 } : {}),
+    ...(maxHeight ? { maxHeight } : {}),
+  }
 
   const roster     = bed?.extra_plants ?? []
   const rosterIds  = new Set(roster.map((p) => p.id))

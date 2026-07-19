@@ -15,8 +15,14 @@ function intraBedPairs(extraPlants) {
   return pairs
 }
 
-export default function BedSidebar({ bed, zone, region, onRemovePlant, maxHeight }) {
-  const outerStyle = maxHeight ? { ...panelStyle, maxHeight } : panelStyle
+export default function BedSidebar({ bed, zone, region, onRemovePlant, maxHeight, bare = false }) {
+  // bare: dropped into a container that already has its own border/rounding
+  // (the mobile bottom sheet) — a nested card here just wastes width.
+  const outerStyle = {
+    ...panelStyle,
+    ...(bare ? { border: 'none', borderRadius: 0 } : {}),
+    ...(maxHeight ? { maxHeight } : {}),
+  }
 
   if (!bed) {
     return (
