@@ -80,7 +80,7 @@ function CompanionTooltip({ bed, selectedBed, rel, mouseX, mouseY }) {
   )
 }
 
-export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed, mobile = false }) {
+export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed, mobile = false, onBedActivate }) {
   const [hovered, setHovered] = useState(null)
   const [hoveredObstacle, setHoveredObstacle] = useState(null)
   const [localBeds, setLocalBeds] = useState(beds)
@@ -88,6 +88,13 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
   const [companionTooltip, setCompanionTooltip] = useState(null)
   const dragging = useRef(null)
   const resizing = useRef(null)
+  // Mobile: a single tap selects (and can immediately drag from that same
+  // touch) — opening the full detail sheet on tap would swallow the drag
+  // before it starts. A second tap on the same bed within this window opens
+  // details instead, same idea as a double-click.
+  const lastTapRef = useRef({ id: null, time: 0 })
+  const DOUBLE_TAP_MS = 350
+  const TAP_MOVE_THRESHOLD_FT = 0.3
 
   // Intentional prop→state sync: localBeds/localObstacles mutate optimistically
   // during drag/resize (see dragging/resizing refs below) without waiting on the
@@ -129,6 +136,7 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
       startMouseY: (e.clientY - svgRect.top) * scale,
       startBedX: bed.x,
       startBedY: bed.y,
+      moved: false,
     }
   }
 
@@ -207,6 +215,9 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
       const { startMouseX, startMouseY, startBedX, startBedY, bed } = dragging.current
       const dx = (mouseX - startMouseX) / PX_PER_FT
       const dy = (mouseY - startMouseY) / PX_PER_FT
+      if (Math.abs(dx) > TAP_MOVE_THRESHOLD_FT || Math.abs(dy) > TAP_MOVE_THRESHOLD_FT) {
+        dragging.current.moved = true
+      }
       // Clamp and snap the visual footprint (rotation-aware), then convert back
       // to the stored position
       const fp = bedFootprint({ ...bed, x: startBedX + dx, y: startBedY + dy })
@@ -242,9 +253,23 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
       resizing.current = null
       onObstacleResize(resized)
     } else if (dragging.current) {
-      const moved = localBeds.find((b) => b.id === dragging.current.bed.id)
+      const { bed: draggedBed, moved: didMove } = dragging.current
+      const moved = localBeds.find((b) => b.id === draggedBed.id)
       dragging.current = null
       onBedMove(moved)
+      if (mobile && onBedActivate && !didMove) {
+        // Date.now() here is fine — this branch only runs inside the SVG's
+        // onPointerUp handler (a real user interaction), never during render.
+        // eslint-disable-next-line react-hooks/purity
+        const now = Date.now()
+        const last = lastTapRef.current
+        if (last.id === draggedBed.id && now - last.time < DOUBLE_TAP_MS) {
+          lastTapRef.current = { id: null, time: 0 }
+          onBedActivate(draggedBed.id)
+        } else {
+          lastTapRef.current = { id: draggedBed.id, time: now }
+        }
+      }
     } else if (resizing.current) {
       const resized = localBeds.find((b) => b.id === resizing.current.bed.id)
       resizing.current = null

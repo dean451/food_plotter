@@ -41,6 +41,10 @@ export default function App() {
   const [showQuote, setShowQuote] = useState(false)
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showTemplates, setShowTemplates] = useState(false)
+  // Mobile: tapping a bed selects it (and can drag from that tap); a second
+  // tap on the same bed opens this detail sheet. Separate from selectedBedId
+  // so a single tap-to-drag doesn't also pop the sheet open mid-gesture.
+  const [mobileDetailBedId, setMobileDetailBedId] = useState(null)
   const isMobile = useIsMobile()
   const [toasts, setToasts] = useState([])
   const toastSeq = useRef(0)
@@ -121,6 +125,7 @@ export default function App() {
     if (r.ok) {
       setYard(parseYard(await r.json()))
       setSelectedBedId(null)
+      setMobileDetailBedId(null)
       window.history.pushState(null, '', '/' + token)
       setShowGardens(false)
     }
@@ -134,6 +139,7 @@ export default function App() {
       if (r.ok) {
         setYard(parseYard(await r.json()))
         setSelectedBedId(null)
+        setMobileDetailBedId(null)
       }
     }
     window.addEventListener('popstate', onPopState)
@@ -271,6 +277,7 @@ export default function App() {
     if (!bed) return
     updateYardBeds((beds) => beds.filter((b) => b.id !== bedId))
     if (selectedBedId === bedId) setSelectedBedId(null)
+    if (mobileDetailBedId === bedId) setMobileDetailBedId(null)
     fetch(`/api/v1/yards/${yard.token}/beds/${bedId}`, { method: 'DELETE' }).catch(console.error)
     showToast(`Deleted "${bed.name}"`, { actionLabel: 'Undo', onAction: () => restoreBed(bed) })
   }
@@ -279,6 +286,7 @@ export default function App() {
     await fetch(`/api/v1/yards/${yard.token}/beds`, { method: 'DELETE' })
     updateYardBeds(() => [])
     setSelectedBedId(null)
+    setMobileDetailBedId(null)
   }
 
   async function handleClearBeds() {
@@ -374,6 +382,18 @@ export default function App() {
 
   const selectedBed = (() => {
     const bed = yard?.beds.find((b) => b.id === selectedBedId) ?? null
+    if (!bed) return null
+    const enrichedExtraPlants = (bed.extra_plants ?? []).map((ep) => {
+      const full = plants.find((p) => p.id === ep.id)
+      return full ? { ...full, ...ep } : ep
+    })
+    return { ...bed, extra_plants: enrichedExtraPlants }
+  })()
+
+  // Mobile detail sheet's bed — deliberately separate from selectedBed (see
+  // mobileDetailBedId above): tapping to select/drag shouldn't also pop this open.
+  const mobileDetailBed = (() => {
+    const bed = yard?.beds.find((b) => b.id === mobileDetailBedId) ?? null
     if (!bed) return null
     const enrichedExtraPlants = (bed.extra_plants ?? []).map((ep) => {
       const full = plants.find((p) => p.id === ep.id)
@@ -875,6 +895,7 @@ export default function App() {
                   selectedPlantCompanions={selectedPlantCompanions}
                   selectedBed={selectedBed}
                   mobile
+                  onBedActivate={setMobileDetailBedId}
                 />
               </div>
               <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -891,11 +912,13 @@ export default function App() {
                 )}
               </div>
 
-              {/* Viewer-first: tapping a bed opens its details as a bottom sheet
-                  instead of a permanent side column — there's no room for one. */}
-              {selectedBed && (
+              {/* Viewer-first: a second tap on a bed opens its details as a
+                  bottom sheet instead of a permanent side column — there's no
+                  room for one, and popping it on the first tap would swallow
+                  the drag gesture before it starts. */}
+              {mobileDetailBed && (
                 <>
-                  <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.35)', zIndex: 199 }} onClick={() => setSelectedBedId(null)} />
+                  <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.35)', zIndex: 199 }} onClick={() => setMobileDetailBedId(null)} />
                   <div style={{
                     position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 200,
                     background: '#fff', borderRadius: '14px 14px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,.2)',
@@ -903,12 +926,12 @@ export default function App() {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
                       <button
-                        onClick={() => setSelectedBedId(null)}
+                        onClick={() => setMobileDetailBedId(null)}
                         style={{ border: 'none', background: 'none', fontSize: 18, color: '#888', cursor: 'pointer', padding: 4 }}
                       >✕</button>
                     </div>
                     <PlantPanel
-                      bed={selectedBed} plants={plants}
+                      bed={mobileDetailBed} plants={plants}
                       zone={yard.hardiness_zone}
                       region={yard.region}
                       onAddPlant={handleAddPlantToBed}
@@ -916,7 +939,7 @@ export default function App() {
                     />
                     <div style={{ marginTop: 12 }}>
                       <BedSidebar
-                        bed={selectedBed}
+                        bed={mobileDetailBed}
                         zone={yard.hardiness_zone}
                         region={yard.region}
                         onRemovePlant={handleRemovePlantFromBed}
