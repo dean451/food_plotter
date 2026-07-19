@@ -10,8 +10,19 @@ function coverageTarget(yardArea) {
   return [15, 30]
 }
 
-export default function YardStats({ yard }) {
+export default function YardStats({ yard, compact = false }) {
   const yardArea = yard.width * yard.height
+
+  // Mobile: the 6-box strip is unreadable in one column, and none of it is
+  // essential to just looking at a yard — a one-line size is enough.
+  if (compact) {
+    return (
+      <div style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>
+        {sqft(yardArea)} sq ft
+      </div>
+    )
+  }
+
   // Coverage guidance is measured against plantable space — the yard minus
   // anything marked as house/driveway/etc.
   const plantable = plantableArea(yard)

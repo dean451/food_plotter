@@ -12,6 +12,7 @@ import Toasts from './components/Toasts.jsx'
 import QuoteSheet from './components/QuoteSheet.jsx'
 import ObstacleBar from './components/ObstacleBar.jsx'
 import YardMiniMap from './components/YardMiniMap.jsx'
+import useIsMobile from './useIsMobile.js'
 
 function parseYard(y) {
   return {
@@ -38,6 +39,9 @@ export default function App() {
   const [editingYard, setEditingYard] = useState(false)
   const [yardDraft, setYardDraft] = useState({ name: '', width: '', height: '' })
   const [showQuote, setShowQuote] = useState(false)
+  const [showMoreMenu, setShowMoreMenu] = useState(false)
+  const [showTemplates, setShowTemplates] = useState(false)
+  const isMobile = useIsMobile()
   const [toasts, setToasts] = useState([])
   const toastSeq = useRef(0)
   // When the main canvas scrolls out of view, the right column swaps the bed
@@ -725,12 +729,16 @@ export default function App() {
                   style={{ fontSize: 11, border: 'none', background: 'none', color: '#aaa', cursor: 'pointer', padding: '2px 4px' }}
                   title="Rename or resize yard"
                 >✎</button>
-                <ZonePicker zone={yard.hardiness_zone} onChange={saveZone} />
-                <RegionPicker region={yard.region} onChange={saveRegion} />
+                {!isMobile && (
+                  <>
+                    <ZonePicker zone={yard.hardiness_zone} onChange={saveZone} />
+                    <RegionPicker region={yard.region} onChange={saveRegion} />
+                  </>
+                )}
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              {yard.beds.length > 0 && (
+              {!isMobile && yard.beds.length > 0 && (
                 <button
                   onClick={handleClearBeds}
                   title="Remove every bed (you can undo)"
@@ -746,7 +754,7 @@ export default function App() {
                   <span style={{ color: '#ef5350', fontWeight: 800 }}>✕</span> Clear Beds
                 </button>
               )}
-              {(yard.obstacles ?? []).length > 0 && (
+              {!isMobile && (yard.obstacles ?? []).length > 0 && (
                 <button
                   onClick={handleClearObstacles}
                   title="Remove everything marked on the yard — house, driveway, etc. (you can undo)"
@@ -777,76 +785,199 @@ export default function App() {
               >
                 🧾 Get Quote
               </button>
-              <button
-                onClick={() => exportGardenPlan(yard)}
-                disabled={exportDisabled}
-                title={exportDisabled ? 'Add a bed first' : 'Download garden plan as CSV — lumber, soil, and plant counts'}
-                style={{
-                  padding: '5px 16px',
-                  background: exportDisabled ? '#6b5340' : '#3d2b1a',
-                  border: `3px solid ${exportDisabled ? '#a08060' : '#c8a96e'}`,
-                  borderRadius: 5, color: exportDisabled ? '#9a8070' : '#e8d5a3',
-                  fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
-                  cursor: exportDisabled ? 'not-allowed' : 'pointer',
-                }}
-              >
-                🌱 Export Plan ⛏️
-              </button>
+              {!isMobile && (
+                <button
+                  onClick={() => exportGardenPlan(yard)}
+                  disabled={exportDisabled}
+                  title={exportDisabled ? 'Add a bed first' : 'Download garden plan as CSV — lumber, soil, and plant counts'}
+                  style={{
+                    padding: '5px 16px',
+                    background: exportDisabled ? '#6b5340' : '#3d2b1a',
+                    border: `3px solid ${exportDisabled ? '#a08060' : '#c8a96e'}`,
+                    borderRadius: 5, color: exportDisabled ? '#9a8070' : '#e8d5a3',
+                    fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
+                    cursor: exportDisabled ? 'not-allowed' : 'pointer',
+                  }}
+                >
+                  🌱 Export Plan ⛏️
+                </button>
+              )}
+              {isMobile && (
+                <div style={{ position: 'relative' }}>
+                  <button
+                    onClick={() => setShowMoreMenu((s) => !s)}
+                    title="More actions"
+                    style={{ padding: '5px 12px', fontSize: 16, border: '1px solid #ccc', borderRadius: 5, background: '#fff', cursor: 'pointer', color: '#555' }}
+                  >
+                    ⋯
+                  </button>
+                  {showMoreMenu && (
+                    <>
+                      <div style={{ position: 'fixed', inset: 0, zIndex: 99 }} onClick={() => setShowMoreMenu(false)} />
+                      <div style={{
+                        position: 'absolute', right: 0, top: 'calc(100% + 4px)', zIndex: 100,
+                        background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 10,
+                        boxShadow: '0 4px 12px rgba(0,0,0,.12)', display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200,
+                      }}>
+                        <div style={{ display: 'flex', gap: 6 }}>
+                          <ZonePicker zone={yard.hardiness_zone} onChange={saveZone} />
+                          <RegionPicker region={yard.region} onChange={saveRegion} />
+                        </div>
+                        {yard.beds.length > 0 && (
+                          <button
+                            onClick={() => { setShowMoreMenu(false); handleClearBeds() }}
+                            style={{ padding: '6px 10px', fontSize: 12, border: '1px solid #c8a96e', borderRadius: 5, background: '#fff', color: '#7a5a30', cursor: 'pointer', textAlign: 'left' }}
+                          >
+                            ✕ Clear Beds
+                          </button>
+                        )}
+                        {(yard.obstacles ?? []).length > 0 && (
+                          <button
+                            onClick={() => { setShowMoreMenu(false); handleClearObstacles() }}
+                            style={{ padding: '6px 10px', fontSize: 12, border: '1px solid #90a4ae', borderRadius: 5, background: '#fff', color: '#546e7a', cursor: 'pointer', textAlign: 'left' }}
+                          >
+                            ✕ Clear Obstacles
+                          </button>
+                        )}
+                        <button
+                          onClick={() => { setShowMoreMenu(false); exportGardenPlan(yard) }}
+                          disabled={exportDisabled}
+                          style={{ padding: '6px 10px', fontSize: 12, border: '1px solid #c8a96e', borderRadius: 5, background: '#fff', color: exportDisabled ? '#bbb' : '#7a5a30', cursor: exportDisabled ? 'not-allowed' : 'pointer', textAlign: 'left' }}
+                        >
+                          🌱 Export Plan
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
-          <YardStats yard={yard} />
+          <YardStats yard={yard} compact={isMobile} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '210px 1fr 250px', gap: 16, alignItems: 'start' }}>
-            <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
-              <PlantPanel
-                bed={selectedBed} plants={plants}
-                zone={yard.hardiness_zone}
-                region={yard.region}
-                onAddPlant={handleAddPlantToBed}
-                onRemovePlant={handleRemovePlantFromBed}
-                maxHeight="calc(100vh - 56px)"
-              />
-            </div>
+          {isMobile ? (
             <div style={{ minWidth: 0 }}>
               <div ref={canvasWrapRef}>
-              <YardCanvas
-                yard={yard} beds={yard.beds} obstacles={yard.obstacles}
-                selectedBedId={selectedBedId}
-                onSelectBed={(id) => { setSelectedBedId(id); setSelectedObstacleId(null) }}
-                selectedObstacleId={selectedObstacleId}
-                onSelectObstacle={(id) => { setSelectedObstacleId(id); setSelectedBedId(null) }}
-                onBedMove={handleBedMove}
-                onBedDelete={handleBedDelete}
-                onBedRotate={handleBedRotate}
-                onBedResize={handleBedResize}
-                onObstacleMove={handleObstacleMove}
-                onObstacleResize={handleObstacleResize}
-                onObstacleDelete={handleObstacleDelete}
-                selectedPlantCompanions={selectedPlantCompanions}
-                selectedBed={selectedBed}
-              />
+                <YardCanvas
+                  yard={yard} beds={yard.beds} obstacles={yard.obstacles}
+                  selectedBedId={selectedBedId}
+                  onSelectBed={(id) => { setSelectedBedId(id); setSelectedObstacleId(null) }}
+                  selectedObstacleId={selectedObstacleId}
+                  onSelectObstacle={(id) => { setSelectedObstacleId(id); setSelectedBedId(null) }}
+                  onBedMove={handleBedMove}
+                  onBedDelete={handleBedDelete}
+                  onBedRotate={handleBedRotate}
+                  onBedResize={handleBedResize}
+                  onObstacleMove={handleObstacleMove}
+                  onObstacleResize={handleObstacleResize}
+                  onObstacleDelete={handleObstacleDelete}
+                  selectedPlantCompanions={selectedPlantCompanions}
+                  selectedBed={selectedBed}
+                  mobile
+                />
               </div>
               <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <ObstacleBar onAdd={handleObstacleAdd} />
                 <AddBedForm yard={yard} onAdd={handleBedAdd} />
-                <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} region={yard.region} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
+                <button
+                  onClick={() => setShowTemplates((s) => !s)}
+                  style={{ padding: '8px 12px', fontSize: 13, border: '1px solid #ccc', borderRadius: 6, background: '#fff', color: '#555', cursor: 'pointer' }}
+                >
+                  {showTemplates ? '▾ Hide Templates' : '▸ Browse Templates'}
+                </button>
+                {showTemplates && (
+                  <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} region={yard.region} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
+                )}
               </div>
+
+              {/* Viewer-first: tapping a bed opens its details as a bottom sheet
+                  instead of a permanent side column — there's no room for one. */}
+              {selectedBed && (
+                <>
+                  <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.35)', zIndex: 199 }} onClick={() => setSelectedBedId(null)} />
+                  <div style={{
+                    position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 200,
+                    background: '#fff', borderRadius: '14px 14px 0 0', boxShadow: '0 -4px 20px rgba(0,0,0,.2)',
+                    maxHeight: '75vh', overflowY: 'auto', padding: 16,
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+                      <button
+                        onClick={() => setSelectedBedId(null)}
+                        style={{ border: 'none', background: 'none', fontSize: 18, color: '#888', cursor: 'pointer', padding: 4 }}
+                      >✕</button>
+                    </div>
+                    <PlantPanel
+                      bed={selectedBed} plants={plants}
+                      zone={yard.hardiness_zone}
+                      region={yard.region}
+                      onAddPlant={handleAddPlantToBed}
+                      onRemovePlant={handleRemovePlantFromBed}
+                    />
+                    <div style={{ marginTop: 12 }}>
+                      <BedSidebar
+                        bed={selectedBed}
+                        zone={yard.hardiness_zone}
+                        region={yard.region}
+                        onRemovePlant={handleRemovePlantFromBed}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
-              {canvasAway ? (
-                <YardMiniMap yard={yard} width={250} />
-              ) : (
-                <BedSidebar
-                  bed={selectedBed}
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: '210px 1fr 250px', gap: 16, alignItems: 'start' }}>
+              <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
+                <PlantPanel
+                  bed={selectedBed} plants={plants}
                   zone={yard.hardiness_zone}
                   region={yard.region}
+                  onAddPlant={handleAddPlantToBed}
                   onRemovePlant={handleRemovePlantFromBed}
                   maxHeight="calc(100vh - 56px)"
                 />
-              )}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div ref={canvasWrapRef}>
+                <YardCanvas
+                  yard={yard} beds={yard.beds} obstacles={yard.obstacles}
+                  selectedBedId={selectedBedId}
+                  onSelectBed={(id) => { setSelectedBedId(id); setSelectedObstacleId(null) }}
+                  selectedObstacleId={selectedObstacleId}
+                  onSelectObstacle={(id) => { setSelectedObstacleId(id); setSelectedBedId(null) }}
+                  onBedMove={handleBedMove}
+                  onBedDelete={handleBedDelete}
+                  onBedRotate={handleBedRotate}
+                  onBedResize={handleBedResize}
+                  onObstacleMove={handleObstacleMove}
+                  onObstacleResize={handleObstacleResize}
+                  onObstacleDelete={handleObstacleDelete}
+                  selectedPlantCompanions={selectedPlantCompanions}
+                  selectedBed={selectedBed}
+                />
+                </div>
+                <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <ObstacleBar onAdd={handleObstacleAdd} />
+                  <AddBedForm yard={yard} onAdd={handleBedAdd} />
+                  <BedTemplates yard={yard} plants={plants} zone={yard.hardiness_zone} region={yard.region} onAdd={handleBedAdd} onClearBeds={clearBeds} onRenameYard={renameYard} />
+                </div>
+              </div>
+              <div style={{ position: 'sticky', top: 24, alignSelf: 'start' }}>
+                {canvasAway ? (
+                  <YardMiniMap yard={yard} width={250} />
+                ) : (
+                  <BedSidebar
+                    bed={selectedBed}
+                    zone={yard.hardiness_zone}
+                    region={yard.region}
+                    onRemovePlant={handleRemovePlantFromBed}
+                    maxHeight="calc(100vh - 56px)"
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 

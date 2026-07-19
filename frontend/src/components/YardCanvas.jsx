@@ -80,7 +80,7 @@ function CompanionTooltip({ bed, selectedBed, rel, mouseX, mouseY }) {
   )
 }
 
-export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed }) {
+export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSelectBed, selectedObstacleId, onSelectObstacle, onBedMove, onBedDelete, onBedRotate, onBedResize, onObstacleMove, onObstacleResize, onObstacleDelete, selectedPlantCompanions, selectedBed, mobile = false }) {
   const [hovered, setHovered] = useState(null)
   const [hoveredObstacle, setHoveredObstacle] = useState(null)
   const [localBeds, setLocalBeds] = useState(beds)
@@ -326,11 +326,14 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
                     <circle r={9} fill="white" stroke="#e53935" strokeWidth={1.5} />
                     <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#e53935" fontWeight="bold" style={{ userSelect: 'none' }}>×</text>
                   </g>
-                  {/* Diagonal resize — bottom right */}
-                  <g transform={`translate(${ox + ow - 10}, ${oy + oh - 10})`} onPointerDown={(e) => onObstacleResizePointerDown(e, o)} style={{ cursor: 'nwse-resize' }}>
-                    <circle r={9} fill="white" stroke="#555" strokeWidth={1.5} />
-                    <text textAnchor="middle" dominantBaseline="middle" fontSize={11} fill="#555" style={{ userSelect: 'none' }}>⤡</text>
-                  </g>
+                  {/* Diagonal resize — bottom right. Fingertip-precision handle,
+                      not workable on touch, so desktop only. */}
+                  {!mobile && (
+                    <g transform={`translate(${ox + ow - 10}, ${oy + oh - 10})`} onPointerDown={(e) => onObstacleResizePointerDown(e, o)} style={{ cursor: 'nwse-resize' }}>
+                      <circle r={9} fill="white" stroke="#555" strokeWidth={1.5} />
+                      <text textAnchor="middle" dominantBaseline="middle" fontSize={11} fill="#555" style={{ userSelect: 'none' }}>⤡</text>
+                    </g>
+                  )}
                   <text
                     x={ox + ow / 2} y={oy + 12}
                     textAnchor="middle" fontSize={8} fontFamily="sans-serif" fill="#777"
@@ -532,29 +535,36 @@ export default function YardCanvas({ yard, beds, obstacles, selectedBedId, onSel
                     <circle r={9} fill="white" stroke="#e53935" strokeWidth={1.5} />
                     <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#e53935" fontWeight="bold" style={{ userSelect: 'none' }}>×</text>
                   </g>
-                  {/* Rotate CW — top left */}
-                  <g transform={`translate(${bx + 10}, ${by + 10})`} onPointerDown={(e) => { e.stopPropagation(); onBedRotate(bed.id, (bed.rotation + 90) % 360) }} style={{ cursor: 'pointer' }}>
-                    <circle r={9} fill="white" stroke="#1565c0" strokeWidth={1.5} />
-                    <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#1565c0" style={{ userSelect: 'none' }}>↻</text>
-                  </g>
-                  {/* Rotate CCW — bottom left */}
-                  <g transform={`translate(${bx + 10}, ${by + bh - 10})`} onPointerDown={(e) => { e.stopPropagation(); onBedRotate(bed.id, ((bed.rotation - 90) + 360) % 360) }} style={{ cursor: 'pointer' }}>
-                    <circle r={9} fill="white" stroke="#1565c0" strokeWidth={1.5} />
-                    <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#1565c0" style={{ userSelect: 'none' }}>↺</text>
-                  </g>
-                  {/* Diagonal resize — bottom right */}
-                  <g transform={`translate(${bx + bw - 10}, ${by + bh - 10})`} onPointerDown={(e) => onResizePointerDown(e, bed)} style={{ cursor: 'nwse-resize' }}>
-                    <circle r={9} fill="white" stroke="#555" strokeWidth={1.5} />
-                    <text textAnchor="middle" dominantBaseline="middle" fontSize={11} fill="#555" style={{ userSelect: 'none' }}>⤡</text>
-                  </g>
-                  {/* ⌘D hint */}
-                  <text
-                    x={cx} y={by + bh - 4}
-                    textAnchor="middle" fontSize={8} fontFamily="sans-serif"
-                    fill="#888" style={{ pointerEvents: 'none', userSelect: 'none' }}
-                  >
-                    ⌘D dup
-                  </text>
+                  {/* Rotate + resize handles are a few px wide — fine with a
+                      mouse cursor, not workable with a fingertip. Desktop only;
+                      mobile keeps tap-to-select and drag-to-move. */}
+                  {!mobile && (
+                    <>
+                      {/* Rotate CW — top left */}
+                      <g transform={`translate(${bx + 10}, ${by + 10})`} onPointerDown={(e) => { e.stopPropagation(); onBedRotate(bed.id, (bed.rotation + 90) % 360) }} style={{ cursor: 'pointer' }}>
+                        <circle r={9} fill="white" stroke="#1565c0" strokeWidth={1.5} />
+                        <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#1565c0" style={{ userSelect: 'none' }}>↻</text>
+                      </g>
+                      {/* Rotate CCW — bottom left */}
+                      <g transform={`translate(${bx + 10}, ${by + bh - 10})`} onPointerDown={(e) => { e.stopPropagation(); onBedRotate(bed.id, ((bed.rotation - 90) + 360) % 360) }} style={{ cursor: 'pointer' }}>
+                        <circle r={9} fill="white" stroke="#1565c0" strokeWidth={1.5} />
+                        <text textAnchor="middle" dominantBaseline="middle" fontSize={13} fill="#1565c0" style={{ userSelect: 'none' }}>↺</text>
+                      </g>
+                      {/* Diagonal resize — bottom right */}
+                      <g transform={`translate(${bx + bw - 10}, ${by + bh - 10})`} onPointerDown={(e) => onResizePointerDown(e, bed)} style={{ cursor: 'nwse-resize' }}>
+                        <circle r={9} fill="white" stroke="#555" strokeWidth={1.5} />
+                        <text textAnchor="middle" dominantBaseline="middle" fontSize={11} fill="#555" style={{ userSelect: 'none' }}>⤡</text>
+                      </g>
+                      {/* ⌘D hint — keyboard shortcut, meaningless without a keyboard */}
+                      <text
+                        x={cx} y={by + bh - 4}
+                        textAnchor="middle" fontSize={8} fontFamily="sans-serif"
+                        fill="#888" style={{ pointerEvents: 'none', userSelect: 'none' }}
+                      >
+                        ⌘D dup
+                      </text>
+                    </>
+                  )}
                 </>
               )}
             </g>
