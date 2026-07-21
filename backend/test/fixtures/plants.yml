@@ -1,0 +1,17 @@
+tomato:
+  name: Tomato
+  category: vegetable
+  season: summer
+  spacing_ft: 2.0
+  sun: full sun
+  water_needs: moderate
+  emoji: "🍅"
+
+basil:
+  name: Basil
+  category: herb
+  season: summer
+  spacing_ft: 1.0
+  sun: full sun
+  water_needs: moderate
+  emoji: "🌿"

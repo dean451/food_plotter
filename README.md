@@ -76,6 +76,17 @@ stack you actually staged changes in. Enable it once per clone with:
 git config core.hooksPath .githooks
 ```
 
+### Tests
+
+Happy-path coverage, not exhaustive — models, controllers, key components,
+and the pure logic in `utils.js` (cost estimates, zone/region matching, bed
+placement).
+
+```bash
+cd frontend && npm run test    # vitest + testing-library
+cd backend  && bin/rails test  # minitest
+```
+
 ## Deployment
 
 Ships as a single Docker image (`Dockerfile`) with a `fly.toml` for

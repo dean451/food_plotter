@@ -1,0 +1,12 @@
+tomato_bed:
+  name: Tomato Bed
+  yard: backyard
+  plant: tomato
+  x: 2.0
+  y: 2.0
+  width: 4.0
+  height: 4.0
+  depth: 1.0
+  rotation: 0
+  material: cedar
+  emoji: "🍅"

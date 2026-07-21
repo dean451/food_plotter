@@ -1,0 +1,11 @@
+# Fixtures are inserted straight into the DB and skip model callbacks, so
+# `token` (normally generated in Yard#generate_token) is set explicitly here.
+backyard:
+  name: Backyard
+  width: 20.0
+  height: 15.0
+  unit: ft
+  hardiness_zone: 8b
+  region: south_central
+  token: fixture-backyard-token
+  user: dean

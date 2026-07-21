@@ -1,0 +1,5 @@
+tomato_likes_basil:
+  plant: tomato
+  companion: basil
+  relationship: beneficial
+  notes: Basil is said to improve tomato flavor and repel pests.
